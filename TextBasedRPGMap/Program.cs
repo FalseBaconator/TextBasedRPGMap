@@ -26,9 +26,9 @@ namespace TextBasedRPGMap
         };
         // map legend:
         // ^ = mountain gray
-        // ` = grass green
+        // ` = grass dark green background and black text
         // ~ = water cyan
-        // * = trees dark green
+        // * = trees green
 
 
         static void Main(string[] args)
@@ -43,6 +43,29 @@ namespace TextBasedRPGMap
 
         static void DisplayMap(int scale = 1)
         {
+
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" ^ = Mountains ");
+            Console.ResetColor();
+            Console.Write(" | ");
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" ` = Grass ");
+            Console.ResetColor();
+            Console.Write(" | ");
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" ~ = Water ");
+            Console.ResetColor();
+            Console.Write(" | ");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" * = Trees ");
+            Console.ResetColor();
+            Console.Write(" | ");
+            Console.WriteLine("");
+
             Console.Write("+");                                 //
             for(int i = 0; i < map.GetLength(1) * scale; i++)   //
             {                                                   //  Draw Top Border
@@ -62,16 +85,20 @@ namespace TextBasedRPGMap
                             switch (map[i, k])                                          //
                             {                                                           //
                                 case '^':                                               //
-                                    Console.ForegroundColor = ConsoleColor.DarkGray;    //
+                                    Console.BackgroundColor = ConsoleColor.DarkGray;    //
+                                    Console.ForegroundColor = ConsoleColor.Black;       //
                                     break;                                              //
                                 case '`':                                               //
-                                    Console.ForegroundColor = ConsoleColor.Green;       //
+                                    Console.BackgroundColor = ConsoleColor.Green;       //
+                                    Console.ForegroundColor = ConsoleColor.Black;       //
                                     break;                                              //
                                 case '~':                                               //
-                                    Console.ForegroundColor = ConsoleColor.Cyan;        //
+                                    Console.BackgroundColor = ConsoleColor.Cyan;        //
+                                    Console.ForegroundColor = ConsoleColor.Black;       //
                                     break;                                              //
                                 case '*':                                               //
-                                    Console.ForegroundColor = ConsoleColor.DarkGreen;   //
+                                    Console.BackgroundColor = ConsoleColor.DarkGreen;   //
+                                    Console.ForegroundColor = ConsoleColor.Black;       //
                                     break;                                              //
                                 default:                                                //
                                     Console.ResetColor();                               //
