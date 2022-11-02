@@ -8,6 +8,12 @@ namespace TextBasedRPGMap
 {
     internal class Program
     {
+        static bool gameOver = false;
+
+        static int storeX;
+        static int storeY;
+        static int nextX;
+        static int nextY;
 
         static char[,] map = new char[,]
         {
@@ -33,11 +39,34 @@ namespace TextBasedRPGMap
 
         static void Main(string[] args)
         {
-            DisplayMap();
+            Console.CursorVisible = false;
+
+
+            Console.WriteLine("Displaying map with no scale imput");        //
+            Console.ReadKey(true);                                          //
+            DisplayMap();                                                   //
+            Console.ReadKey(true);                                          //
+            Console.Clear();                                                //
+            Console.WriteLine("Displaying map with a scale input of 2");    //
+            Console.ReadKey(true);                                          //
+            DisplayMap(2);                                                  //
+            Console.ReadKey(true);                                          //
+            Console.Clear();                                                //
+            Console.WriteLine("Displaying map with a scale input of 3");    //
+            Console.ReadKey(true);                                          //
+            DisplayMap(3);                                                  //
+            Console.ReadKey(true);                                          //
+
+            Console.Clear();
+            Console.WriteLine("Now to walk around the map.");
             Console.ReadKey(true);
             DisplayMap(2);
-            Console.ReadKey(true);
-            DisplayMap(3);
+
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            storeX = 12;
+            storeY = 15;
+            MoveTo(15, 12);
             Console.ReadKey(true);
         }
 
@@ -126,6 +155,54 @@ namespace TextBasedRPGMap
             }                                                   //
             Console.WriteLine("┘");                             //
 
+        }
+
+        static void MoveTo(int x, int y)
+        {
+            if(0 <= x && x <= map.GetLength(0) && 0 <= y && y <= map.GetLength(1))
+            {
+                switch (map[storeX, storeY])
+                {
+                    case '^':
+                        Console.SetCursorPosition(storeX + 1, storeY + 4);
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        break;
+                    case '`':
+                        Console.SetCursorPosition(storeX + 1, storeY + 4);
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        break;
+                    case '*':
+                        Console.SetCursorPosition(storeX+1, storeY+4);
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        break;
+                    default:
+                        break;
+                }
+                Console.Write(map[storeX, storeY]);
+
+                switch (map[x, y])
+                {
+                    case '^':
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.Write("O");
+                        break;
+                    case '`':
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write("O");
+                        break;
+                    case '*':
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.Write("0");
+                        break;
+                    default:
+                        break;
+                }
+                storeX = x;
+                storeY = y;
+            }
         }
 
 
