@@ -66,18 +66,18 @@ namespace TextBasedRPGMap
             Console.Write(" | ");
             Console.WriteLine("");
 
-            Console.Write("+");                                 //
+            Console.Write("┌");                                 //
             for(int i = 0; i < map.GetLength(1) * scale; i++)   //
             {                                                   //  Draw Top Border
-                Console.Write("-");                             //
+                Console.Write("─");                             //
             }                                                   //
-            Console.WriteLine("+");                             //
+            Console.WriteLine("┐");                             //
 
             for(int i = 0; i < map.GetLength(0); i++)                                   //
             {                                                                           //
                 for(int j = 0; j < scale; j++)                                          //
                 {                                                                       //
-                    Console.Write("|");                                                 //
+                    Console.Write("│");                                                 //
                     for (int k = 0; k < map.GetLength(1); k++)                          //
                     {                                                                   //
                         for(int l = 0; l < scale; l++)                                  //
@@ -108,18 +108,18 @@ namespace TextBasedRPGMap
                             Console.ResetColor();                                       //
                         }                                                               //
                     }                                                                   //
-                    Console.WriteLine("|");                                             //
+                    Console.WriteLine("│");                                             //
                 }                                                                       //
                                                                                         //
             }                                                                           //
 
 
-            Console.Write("+");                                 //
+            Console.Write("└");                                 //
             for(int i = 0; i < map.GetLength(1) * scale; i++)   //
             {                                                   //  Draw Bottom Border
-                Console.Write("-");                             //
+                Console.Write("─");                             //
             }                                                   //
-            Console.WriteLine("+");                             //
+            Console.WriteLine("┘");                             //
 
         }
 
