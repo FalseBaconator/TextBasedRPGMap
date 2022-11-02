@@ -25,10 +25,10 @@ namespace TextBasedRPGMap
         {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         };
         // map legend:
-        // ^ = mountain
-        // ` = grass
-        // ~ = water
-        // * = trees
+        // ^ = mountain gray
+        // ` = grass green
+        // ~ = water cyan
+        // * = trees dark green
 
 
         static void Main(string[] args)
@@ -50,22 +50,41 @@ namespace TextBasedRPGMap
             }                                                   //
             Console.WriteLine("+");                             //
 
-            for(int i = 0; i < map.GetLength(0); i++)           //
-            {                                                   //
-                for(int j = 0; j < scale; j++)       //
-                {                                               //
-                    Console.Write("|");
-                    for (int k = 0; k < map.GetLength(1); k++)              //
-                    {                                           //  Draw Map
-                        for(int l = 0; l < scale; l++)
-                        {
-                            Console.Write(map[i, k]);
-                        }
-                    }                                           //
-                    Console.WriteLine("|");
-                }                                               //
-                                         //
-            }                                                   //
+            for(int i = 0; i < map.GetLength(0); i++)                                   //
+            {                                                                           //
+                for(int j = 0; j < scale; j++)                                          //
+                {                                                                       //
+                    Console.Write("|");                                                 //
+                    for (int k = 0; k < map.GetLength(1); k++)                          //
+                    {                                                                   //
+                        for(int l = 0; l < scale; l++)                                  //
+                        {                                                               //  Draw Map to Scale
+                            switch (map[i, k])                                          //
+                            {                                                           //
+                                case '^':                                               //
+                                    Console.ForegroundColor = ConsoleColor.DarkGray;    //
+                                    break;                                              //
+                                case '`':                                               //
+                                    Console.ForegroundColor = ConsoleColor.Green;       //
+                                    break;                                              //
+                                case '~':                                               //
+                                    Console.ForegroundColor = ConsoleColor.Cyan;        //
+                                    break;                                              //
+                                case '*':                                               //
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;   //
+                                    break;                                              //
+                                default:                                                //
+                                    Console.ResetColor();                               //
+                                    break;                                              //
+                            }                                                           //
+                            Console.Write(map[i, k]);                                   //
+                            Console.ResetColor();                                       //
+                        }                                                               //
+                    }                                                                   //
+                    Console.WriteLine("|");                                             //
+                }                                                                       //
+                                                                                        //
+            }                                                                           //
 
 
             Console.Write("+");                                 //
