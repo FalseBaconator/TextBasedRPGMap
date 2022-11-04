@@ -209,7 +209,7 @@ namespace TextBasedRPGMap
                     case '*':                                               //
                         Console.SetCursorPosition(x + 1, y + 4);            //
                         Console.BackgroundColor = ConsoleColor.DarkGreen;   //
-                        Console.Write("0");                                 //
+                        Console.Write("O");                                 //
                         dontMove = false;                                   //
                         break;                                              //
                     case '~':                                               //
