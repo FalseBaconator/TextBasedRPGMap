@@ -66,8 +66,8 @@ namespace TextBasedRPGMap
             DisplayMap(2);
 
             storeX = 30;
-            storeY = 12;
-            MoveTo(30,12);
+            storeY = 10;
+            MoveTo(30,11);
             while(gameOver == false)
             {
                 Console.CursorVisible = false;
@@ -79,25 +79,20 @@ namespace TextBasedRPGMap
                 else if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeY > 0)
                 {
                     MoveTo(storeX, storeY-1);
-                    Console.WriteLine("Up");
                 }
                 else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeY < map.GetLength(0)*globalScale-1)
                 {
                     MoveTo(storeX, storeY+1);
-                    Console.WriteLine("Down");
                 }
                 else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeX > 0)
                 {
                     MoveTo(storeX-1, storeY);
-                    Console.WriteLine("Left");
                 }
                 else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeX < map.GetLength(1) * globalScale - 1)
                 {
                     MoveTo(storeX+1, storeY);
-                    Console.WriteLine("Right");
                 }
             }
-            Console.ReadKey(true);
         }
 
 
