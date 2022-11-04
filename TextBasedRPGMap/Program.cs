@@ -8,12 +8,15 @@ namespace TextBasedRPGMap
 {
     internal class Program
     {
-        static bool gameOver = false;
+        static bool gameOver;
+        static ConsoleKeyInfo input;
 
+        static int globalScale;
         static int storeX;
         static int storeY;
-        static int nextX;
-        static int nextY;
+        static bool dontMove = false;
+        //static int nextX;
+        //static int nextY;
 
         static char[,] map = new char[,]
         {
@@ -42,37 +45,67 @@ namespace TextBasedRPGMap
             Console.CursorVisible = false;
 
 
-            Console.WriteLine("Displaying map with no scale imput");        //
-            Console.ReadKey(true);                                          //
-            DisplayMap();                                                   //
-            Console.ReadKey(true);                                          //
-            Console.Clear();                                                //
-            Console.WriteLine("Displaying map with a scale input of 2");    //
-            Console.ReadKey(true);                                          //
-            DisplayMap(2);                                                  //
-            Console.ReadKey(true);                                          //
-            Console.Clear();                                                //
-            Console.WriteLine("Displaying map with a scale input of 3");    //
-            Console.ReadKey(true);                                          //
-            DisplayMap(3);                                                  //
-            Console.ReadKey(true);                                          //
+            //Console.WriteLine("Displaying map with no scale imput");        //
+            //Console.ReadKey(true);                                          //
+            //DisplayMap();                                                   //
+            //Console.ReadKey(true);                                          //
+            //Console.Clear();                                                //
+            //Console.WriteLine("Displaying map with a scale input of 2");    //
+            //Console.ReadKey(true);                                          //
+            //DisplayMap(2);                                                  //
+            //Console.ReadKey(true);                                          //
+            //Console.Clear();                                                //
+            //Console.WriteLine("Displaying map with a scale input of 3");    //
+            //Console.ReadKey(true);                                          //
+            //DisplayMap(3);                                                  //
+            //Console.ReadKey(true);                                          //
 
-            Console.Clear();
-            Console.WriteLine("Now to walk around the map.");
-            Console.ReadKey(true);
+            //Console.Clear();
+            //Console.WriteLine("Now to walk around the map.");
+            //Console.ReadKey(true);
             DisplayMap(2);
 
-            Console.ForegroundColor = ConsoleColor.Black;
-
-            storeX = 12;
-            storeY = 15;
-            MoveTo(15, 12);
+            storeX = 30;
+            storeY = 12;
+            MoveTo(30,12);
+            while(gameOver == false)
+            {
+                Console.CursorVisible = false;
+                input = Console.ReadKey(true);
+                if (input.Key == ConsoleKey.Escape)
+                {
+                    gameOver = true;
+                }
+                else if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeY > 0)
+                {
+                    MoveTo(storeX, storeY-1);
+                    Console.WriteLine("Up");
+                }
+                else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeY < map.GetLength(0)*globalScale-1)
+                {
+                    MoveTo(storeX, storeY+1);
+                    Console.WriteLine("Down");
+                }
+                else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeX > 0)
+                {
+                    MoveTo(storeX-1, storeY);
+                    Console.WriteLine("Left");
+                }
+                else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeX < map.GetLength(1) * globalScale - 1)
+                {
+                    MoveTo(storeX+1, storeY);
+                    Console.WriteLine("Right");
+                }
+            }
             Console.ReadKey(true);
         }
 
 
         static void DisplayMap(int scale = 1)
         {
+
+            Console.CursorVisible = false;
+            globalScale = scale;
             Console.Clear();
 
             Console.WriteLine("┌─────────────────┬─────────────┬─────────────┬─────────────┬─────────────┐"); //Draw Legend Top Border
@@ -159,49 +192,66 @@ namespace TextBasedRPGMap
 
         static void MoveTo(int x, int y)
         {
-            if(0 <= x && x <= map.GetLength(0) && 0 <= y && y <= map.GetLength(1))
+            if(0 <= x/globalScale && x/globalScale <= map.GetLength(1) && 0 <= y/globalScale && y/globalScale <= map.GetLength(0))
             {
-                switch (map[storeX, storeY])
-                {
-                    case '^':
-                        Console.SetCursorPosition(storeX + 1, storeY + 4);
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
-                        break;
-                    case '`':
-                        Console.SetCursorPosition(storeX + 1, storeY + 4);
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        break;
-                    case '*':
-                        Console.SetCursorPosition(storeX+1, storeY+4);
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        break;
-                    default:
-                        break;
-                }
-                Console.Write(map[storeX, storeY]);
 
-                switch (map[x, y])
-                {
-                    case '^':
-                        Console.SetCursorPosition(x + 1, y + 4);
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
-                        Console.Write("O");
-                        break;
-                    case '`':
-                        Console.SetCursorPosition(x + 1, y + 4);
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write("O");
-                        break;
-                    case '*':
-                        Console.SetCursorPosition(x + 1, y + 4);
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.Write("0");
-                        break;
-                    default:
-                        break;
-                }
-                storeX = x;
-                storeY = y;
+                Console.ForegroundColor = ConsoleColor.Black;
+
+                switch (map[y / globalScale, x / globalScale])              //
+                {                                                           //
+                    case '^':                                               //
+                        Console.SetCursorPosition(x + 1, y + 4);            //
+                        Console.BackgroundColor = ConsoleColor.DarkGray;    //
+                        Console.Write("O");                                 //
+                        dontMove = false;                                   //
+                        break;                                              //
+                    case '`':                                               //
+                        Console.SetCursorPosition(x + 1, y + 4);            //
+                        Console.BackgroundColor = ConsoleColor.Green;       //
+                        Console.Write("O");                                 //
+                        dontMove = false;                                   //  Draw Player, matching the background color to the map
+                        break;                                              //
+                    case '*':                                               //
+                        Console.SetCursorPosition(x + 1, y + 4);            //
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;   //
+                        Console.Write("0");                                 //
+                        dontMove = false;                                   //
+                        break;                                              //
+                    case '~':                                               //
+                        dontMove = true;                                    //
+                        break;                                              //
+                }                                                           //
+
+                if (dontMove == false)                                                      //
+                {                                                                           //
+                    switch (map[storeY / globalScale, storeX / globalScale])                //
+                    {                                                                       //
+                        case '^':                                                           //
+                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.BackgroundColor = ConsoleColor.DarkGray;                //
+                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
+                            storeX = x;                                                     //
+                            storeY = y;                                                     //
+                            break;                                                          //
+                        case '`':                                                           //
+                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.BackgroundColor = ConsoleColor.Green;                   //
+                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
+                            storeX = x;                                                     //  Replace the obsolete player sprite
+                            storeY = y;                                                     //
+                            break;                                                          //
+                        case '*':                                                           //
+                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;               //
+                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
+                            storeX = x;                                                     //
+                            storeY = y;                                                     //
+                            break;                                                          //
+                        default:                                                            //
+                            break;                                                          //
+                    }                                                                       //
+                }                                                                           //
+
             }
         }
 
