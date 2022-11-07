@@ -15,8 +15,7 @@ namespace TextBasedRPGMap
         static int storeX;
         static int storeY;
         static bool dontMove = false;
-        //static int nextX;
-        //static int nextY;
+
 
         static char[,] map = new char[,]
         {
@@ -42,32 +41,44 @@ namespace TextBasedRPGMap
 
         static void Main(string[] args)
         {
+            Console.Title = "Map Project";
+
             Console.CursorVisible = false;
 
 
-            //Console.WriteLine("Displaying map with no scale imput");        //
-            //Console.ReadKey(true);                                          //
-            //DisplayMap();                                                   //
-            //Console.ReadKey(true);                                          //
-            //Console.Clear();                                                //
-            //Console.WriteLine("Displaying map with a scale input of 2");    //
-            //Console.ReadKey(true);                                          //
-            //DisplayMap(2);                                                  //
-            //Console.ReadKey(true);                                          //
-            //Console.Clear();                                                //
-            //Console.WriteLine("Displaying map with a scale input of 3");    //
-            //Console.ReadKey(true);                                          //
-            //DisplayMap(3);                                                  //
-            //Console.ReadKey(true);                                          //
+            Console.WriteLine("Displaying map with no scale imput");        //
+            Console.ReadKey(true);                                          //
+            DisplayMap();                                                   //
+            Console.ReadKey(true);                                          //
+            Console.Clear();                                                //
+            Console.WriteLine("Displaying map with a scale input of 2");    //
+            Console.ReadKey(true);                                          //
+            DisplayMap(2);                                                  //
+            Console.ReadKey(true);                                          //
+            Console.Clear();                                                //
+            Console.WriteLine("Displaying map with a scale input of 3");    //
+            Console.ReadKey(true);                                          //
+            DisplayMap(3);                                                  //
+            Console.ReadKey(true);                                          //
 
-            //Console.Clear();
-            //Console.WriteLine("Now to walk around the map.");
-            //Console.ReadKey(true);
-            DisplayMap(2);
+            Console.Clear();
+            Console.WriteLine("Now to walk around the map.");
 
-            storeX = 30;
-            storeY = 10;
-            MoveTo(30,11);
+            try
+            {
+                Console.Write("What scale fo you want your map to be while exploring?: ");
+                DisplayMap(Convert.ToInt32(Console.ReadLine()));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Whoops! something went wrong with that. We'll just use the default scale");
+                Console.ReadKey(true);
+                DisplayMap();
+                //throw;
+            }
+
+
+            StartGameLoop();
             while(gameOver == false)
             {
                 Console.CursorVisible = false;
@@ -184,6 +195,15 @@ namespace TextBasedRPGMap
             Console.WriteLine("┘");                             //
 
         }
+
+
+        static void StartGameLoop()
+        {
+            storeX = (map.GetLength(1) * globalScale) / 2;
+            storeY = (map.GetLength(0) * globalScale) / 2;
+            MoveTo(storeX, storeY-1);
+        }
+
 
         static void MoveTo(int x, int y)
         {
