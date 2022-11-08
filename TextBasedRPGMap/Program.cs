@@ -53,7 +53,7 @@ namespace TextBasedRPGMap
             Console.Clear();                                                //
             Console.WriteLine("Displaying map with a scale input of 2");    //
             Console.ReadKey(true);                                          //
-            DisplayMap(2);                                                  //
+            DisplayMap(2);                                                  //Showcase
             Console.ReadKey(true);                                          //
             Console.Clear();                                                //
             Console.WriteLine("Displaying map with a scale input of 3");    //
@@ -64,46 +64,45 @@ namespace TextBasedRPGMap
             Console.Clear();
             Console.WriteLine("Now to walk around the map.");
 
-            try
-            {
-                Console.Write("What scale fo you want your map to be while exploring?: ");
-                DisplayMap(Convert.ToInt32(Console.ReadLine()));
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Whoops! something went wrong with that. We'll just use the default scale");
-                Console.ReadKey(true);
-                DisplayMap();
-                //throw;
-            }
+            try                                                                                                 //
+            {                                                                                                   //
+                Console.Write("What scale fo you want your map to be while exploring?: ");                      //
+                DisplayMap(Convert.ToInt32(Console.ReadLine()));                                                //
+            }                                                                                                   //
+            catch (Exception)                                                                                   //Get Input
+            {                                                                                                   //
+                Console.WriteLine("Whoops! something went wrong with that. We'll just use the default scale");  //
+                Console.ReadKey(true);                                                                          //
+                DisplayMap();                                                                                   //
+            }                                                                                                   //
 
 
-            StartGameLoop();
-            while(gameOver == false)
-            {
-                Console.CursorVisible = false;
-                input = Console.ReadKey(true);
-                if (input.Key == ConsoleKey.Escape)
-                {
-                    gameOver = true;
-                }
-                else if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeY > 0)
-                {
-                    MoveTo(storeX, storeY-1);
-                }
-                else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeY < map.GetLength(0)*globalScale-1)
-                {
-                    MoveTo(storeX, storeY+1);
-                }
-                else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeX > 0)
-                {
-                    MoveTo(storeX-1, storeY);
-                }
-                else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeX < map.GetLength(1) * globalScale - 1)
-                {
-                    MoveTo(storeX+1, storeY);
-                }
-            }
+            StartGameLoop();    //Start the game
+            while(gameOver == false)                                                                                                            //Loop
+            {                                                                                                                                   //
+                Console.CursorVisible = false;                                                                                                  //
+                input = Console.ReadKey(true);                                                                                                  //
+                if (input.Key == ConsoleKey.Escape)                                                                                             //  //
+                {                                                                                                                               //  //End Loop
+                    gameOver = true;                                                                                                            //  //
+                }                                                                                                                               //  //
+                else if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeY > 0)                                          //      //
+                {                                                                                                                               //      //
+                    MoveTo(storeX, storeY-1);                                                                                                   //      //
+                }                                                                                                                               //      //
+                else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeY < map.GetLength(0)*globalScale-1)           //      //
+                {                                                                                                                               //      //
+                    MoveTo(storeX, storeY+1);                                                                                                   //      //
+                }                                                                                                                               //      //Movement
+                else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeX > 0)                                        //      //
+                {                                                                                                                               //      //
+                    MoveTo(storeX-1, storeY);                                                                                                   //      //
+                }                                                                                                                               //      //
+                else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeX < map.GetLength(1) * globalScale - 1)      //      //
+                {                                                                                                                               //      //
+                    MoveTo(storeX+1, storeY);                                                                                                   //      //
+                }                                                                                                                               //      //
+            }                                                                                                                                   //
         }
 
 
