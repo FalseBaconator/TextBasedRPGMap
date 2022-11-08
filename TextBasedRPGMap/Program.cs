@@ -76,6 +76,24 @@ namespace TextBasedRPGMap
                 DisplayMap();                                                                                   //
             }                                                                                                   //
 
+            while((map.GetLength(1) * globalScale) + 2 >= Console.WindowWidth)                                                                  //
+            {                                                                                                                                   //
+                Console.Clear();                                                                                                                //Prevent width based display errors
+                Console.WriteLine("It seems like that scale is too wide to fit in the window, which will cause it to display incorrectly.");    //
+                Console.WriteLine("Please either maximize your window and try again, or choose a smaller scale");                               //
+                try                                                                                                                             //  //
+                {                                                                                                                               //  //
+                    Console.Write("What scale fo you want your map to be while exploring?: ");                                                  //  //
+                    DisplayMap(Convert.ToInt32(Console.ReadLine()));                                                                            //  //
+                }                                                                                                                               //  //
+                catch (Exception)                                                                                                               //  //Get Input
+                {                                                                                                                               //  //
+                    Console.WriteLine("Whoops! something went wrong with that. We'll just use the default scale");                              //  //
+                    Console.ReadKey(true);                                                                                                      //  //
+                    DisplayMap();                                                                                                               //  //
+                }                                                                                                                               //  //
+            }                                                                                                                                   //
+
 
             StartGameLoop();    //Start the game
             while(gameOver == false)                                                                                                            //Loop
