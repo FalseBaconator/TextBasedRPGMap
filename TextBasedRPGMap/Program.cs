@@ -18,7 +18,11 @@ namespace TextBasedRPGMap
         static int storeDungeonY;
         static bool dontMove = false;
         static bool battling = false;
+        
         static string picker;   //the current enemy being fought
+        static int menuCursor;
+        static int potionHeal = 10;
+        static bool playerTurn;
 
         static string[] menu = new string[]
         {
@@ -48,8 +52,8 @@ namespace TextBasedRPGMap
         // ` = grass dark green background and black text
         // ~ = water cyan
         // * = trees green
-        // ≡ = chest yellow
-        // = = mimic print as a chest, yellow
+        // ≡ = chest dark yellow
+        // = = mimic print as a chest, dark yellow
         // ° = stone gray
         // ═║╣ etc = stone wall dark gray
 
@@ -150,14 +154,14 @@ namespace TextBasedRPGMap
             {"Imp", impSprite},
             {"Mimic", mimicSprite}
         };
-        static Dictionary<string, int> healths = new Dictionary<string, int>
+        static Dictionary<string, int> enemyMaxHealths = new Dictionary<string, int>
         {
             {"Slime", 3},
             {"Goblin", 4},
             {"Imp", 5},
             {"Mimic", 3}
         };
-        static Dictionary<string, int> atks = new Dictionary<string, int>
+        static Dictionary<string, int> enemyAtks = new Dictionary<string, int>
         {
             {"Slime", 3},
             {"Goblin", 4},
@@ -176,9 +180,9 @@ namespace TextBasedRPGMap
             {"Slime", "Blue"},
             {"Goblin", "Green"},
             {"Imp", "Red"},
-            {"Mimic", "Yellow"}
+            {"Mimic", "DarkYellow"}
         };
-
+        static int enemyHP;
 
         static void Main(string[] args)
         {
@@ -272,7 +276,29 @@ namespace TextBasedRPGMap
                 }
                 else
                 {
-                    EndBattle();
+                    if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && menuCursor > 0)                              
+                    {
+                        menuCursor--;
+                        DrawBattle();
+                    } else if((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && menuCursor < menu.Length - 1)
+                    {
+                        menuCursor++;
+                        DrawBattle();
+                    }else if(input.Key == ConsoleKey.Enter || input.Key == ConsoleKey.Spacebar)
+                    {
+                        switch (menuCursor)
+                        {
+                            case 0:
+                                AttackEnemy();
+                                break;
+                            case 1:
+                                UsePotion();
+                                break;
+                            case 2:
+                                Run();
+                                break;
+                        }
+                    }
                 }
             }                                                                                                                                       //
         }
@@ -375,7 +401,6 @@ namespace TextBasedRPGMap
             MoveTo(storeOutX, storeOutY-1);
         }
 
-
         static void MoveTo(int x, int y)
         {
             if(0 <= x/globalScale && x/globalScale <= map.GetLength(1) && 0 <= y/globalScale && y/globalScale <= map.GetLength(0))
@@ -441,8 +466,32 @@ namespace TextBasedRPGMap
             }
         }
 
-        static void DrawHud()
+        static void DrawBattle()
         {
+            Console.ResetColor();
+            Console.Clear();
+
+            switch (picker)
+            {
+                case "Imp":
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case "Goblin":
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+                case "Slime":
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case "Mimic":
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    break;
+            }
+
+            foreach (string line in sprites[picker])
+            {
+                Console.WriteLine(line);
+            }
+
             Console.ResetColor();
 
             Console.SetCursorPosition(0, 17);
@@ -453,7 +502,25 @@ namespace TextBasedRPGMap
             Console.SetCursorPosition(20, 17);
             Console.WriteLine("Enemy");
             Console.SetCursorPosition(20, 18);
-            Console.WriteLine("HP: " + healths[picker]);
+            Console.WriteLine("HP: " + enemyHP);
+
+            Console.SetCursorPosition(5, 21);
+            Console.WriteLine(menu[0]);
+            Console.SetCursorPosition(5, 23);
+            Console.WriteLine(menu[1]);
+            Console.SetCursorPosition(5, 25);
+            Console.WriteLine(menu[2]);
+
+            if (playerTurn)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.SetCursorPosition(3, 21 + (menuCursor * 2));
+                Console.Write(">");
+                Console.SetCursorPosition(24, 21 + (menuCursor * 2));
+                Console.Write("<");
+            }
+
+            Console.ResetColor();
 
         }
 
@@ -491,13 +558,15 @@ namespace TextBasedRPGMap
 
         static void StartBattle(int select)
         {
+            menuCursor = 0;
             battling = true;
-            Console.ResetColor();
+            playerTurn = true;
             if (select == 0)
             {
                 picker = "Imp";
                 Console.ForegroundColor = ConsoleColor.Red;
-            }else if (select >= 1 && select <= 4)
+            }
+            else if (select >= 1 && select <= 4)
             {
                 picker = "Goblin";
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -507,25 +576,84 @@ namespace TextBasedRPGMap
                 picker = "Slime";
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
-            Console.Clear();
-            foreach(string line in sprites[picker])
-            {
-                Console.WriteLine(line);
-            }
 
-            Console.ResetColor();
-
-            DrawHud();
-
-            Console.SetCursorPosition(5, 21);
-            Console.WriteLine(menu[0]);
-            Console.SetCursorPosition(5, 23);
-            Console.WriteLine(menu[1]);
-            Console.SetCursorPosition(5, 25);
-            Console.WriteLine(menu[2]);
+            enemyHP = enemyMaxHealths[picker];
+            DrawBattle();
+                        
         }
 
+        static void AttackEnemy()
+        {
+            enemyHP -= PlayerStats["ATK"];
+            if(enemyHP < 0)
+            {
+                enemyHP = 0;
+            }
+            playerTurn = false;
+            DrawBattle();
+            Console.SetCursorPosition(5, 20);
+            Console.Write("You Dealt " + PlayerStats["ATK"] + " DMG!");
+            Console.ReadKey(true);
+            if(enemyHP > 0)
+            {
+                EnemyTurn();
+            }
+            else
+            {
+                EndBattle();
+            }
+        }
 
+        static void UsePotion()
+        {
+            if (PlayerStats["Potions"] > 0)
+            {
+                PlayerStats["Potions"]--;
+                playerTurn = false;
+                DrawBattle();
+                Console.SetCursorPosition(5, 20);
+                Console.Write("You Drank A Health Potion!");
+                Console.ReadKey(true);
+                EnemyTurn();
+            }
+            else
+            {
+                DrawBattle();
+                Console.SetCursorPosition(5, 20);
+                Console.Write("You Don't Have Any Potions To Use!");
+            }
+        }
+
+        static void Run()
+        {
+            var Rand = new Random();
+            playerTurn = false;
+            if (Rand.Next() >= runDifficulties[picker])
+            {
+                DrawBattle();
+                Console.SetCursorPosition(5, 20);
+                Console.Write("You Ran Away Successfully!");
+                Console.ReadKey(true);
+                EndBattle();
+            }
+            else
+            {
+                DrawBattle();
+                Console.SetCursorPosition(5, 20);
+                Console.Write("The " + picker + " Blocks Your Path!");
+                Console.ReadKey(true);
+                EnemyTurn();
+            }
+        }
+
+        static void EnemyTurn()
+        {
+
+
+
+            playerTurn = true;
+            DrawBattle();
+        }
 
     }
 }
