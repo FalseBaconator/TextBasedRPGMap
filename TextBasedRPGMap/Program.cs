@@ -140,7 +140,7 @@ namespace TextBasedRPGMap
             {"Max HP", 10},
             {"ATK", 2},
             {"Potions", 0},
-            //{"", },
+            {"Coins", 0},
             //{"", },
             //{"", },
             //{"", },
@@ -609,6 +609,11 @@ namespace TextBasedRPGMap
             if (PlayerStats["Potions"] > 0)
             {
                 PlayerStats["Potions"]--;
+                PlayerStats["HP"] += potionHeal;
+                if (PlayerStats["HP"] > PlayerStats["Max HP"])
+                {
+                    PlayerStats["HP"] = PlayerStats["Max HP"];
+                }
                 playerTurn = false;
                 DrawBattle();
                 Console.SetCursorPosition(5, 20);
@@ -648,7 +653,7 @@ namespace TextBasedRPGMap
 
         static void EnemyTurn()
         {
-
+            PlayerStats["HP"]
 
 
             playerTurn = true;
