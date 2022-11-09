@@ -12,9 +12,12 @@ namespace TextBasedRPGMap
         static ConsoleKeyInfo input;
 
         static int globalScale;
-        static int storeX;
-        static int storeY;
+        static int storeOutX;
+        static int storeOutY;
+        static int storeDungeonX;
+        static int storeDungeonY;
         static bool dontMove = false;
+        static bool battling = false;
 
 
         static char[,] map = new char[,]
@@ -33,10 +36,14 @@ namespace TextBasedRPGMap
         {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         };
         // map legend:
-        // ^ = mountain gray
+        // ^ = mountain dark gray
         // ` = grass dark green background and black text
         // ~ = water cyan
         // * = trees green
+        // ≡ = chest yellow
+        // = = mimic print as a chest, yellow
+        // ° = stone gray
+        // ═║╣ etc = stone wall dark gray
 
 
         static string[] slimeSprite = new string[15]
@@ -198,23 +205,32 @@ namespace TextBasedRPGMap
                 {                                                                                                                               //  //End Loop
                     gameOver = true;                                                                                                            //  //
                 }                                                                                                                               //  //
-                else if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeY > 0)                                          //      //
-                {                                                                                                                               //      //
-                    MoveTo(storeX, storeY-1);                                                                                                   //      //
-                }                                                                                                                               //      //
-                else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeY < map.GetLength(0)*globalScale-1)           //      //
-                {                                                                                                                               //      //
-                    MoveTo(storeX, storeY+1);                                                                                                   //      //
-                }                                                                                                                               //      //Movement
-                else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeX > 0)                                        //      //
-                {                                                                                                                               //      //
-                    MoveTo(storeX-1, storeY);                                                                                                   //      //
-                }                                                                                                                               //      //
-                else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeX < map.GetLength(1) * globalScale - 1)      //      //
-                {                                                                                                                               //      //
-                    MoveTo(storeX+1, storeY);                                                                                                   //      //
-                }                                                                                                                               //      //
-            }                                                                                                                                   //
+                if (battling == false)
+                {
+                    if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeOutY > 0)                                           //      //
+                    {                                                                                                                                   //      //
+                        MoveTo(storeOutX, storeOutY - 1);                                                                                               //      //
+                    }                                                                                                                                   //      //
+                    else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeOutY < map.GetLength(0) * globalScale - 1)        //      //
+                    {                                                                                                                                   //      //
+                        MoveTo(storeOutX, storeOutY + 1);                                                                                               //      //
+                    }                                                                                                                                   //      //Movement
+                    else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeOutX > 0)                                         //      //
+                    {                                                                                                                                   //      //
+                        MoveTo(storeOutX - 1, storeOutY);                                                                                               //      //
+                    }                                                                                                                                   //      //
+                    else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeOutX < map.GetLength(1) * globalScale - 1)       //      //
+                    {                                                                                                                                   //      //
+                        MoveTo(storeOutX + 1, storeOutY);                                                                                               //      //
+                    }                                                                                                                                   //
+                    Console.ResetColor();
+                    var rand = new Random();
+                    if (rand.Next(0, 10) == 1)
+                    {
+                        StartBattle(rand.Next(0, 10));
+                    }                                                                                                                               //
+                }
+            }                                                                                                                                       //
         }
 
 
@@ -310,9 +326,9 @@ namespace TextBasedRPGMap
 
         static void StartGameLoop()
         {
-            storeX = (map.GetLength(1) * globalScale) / 2;
-            storeY = (map.GetLength(0) * globalScale) / 2;
-            MoveTo(storeX, storeY-1);
+            storeOutX = (map.GetLength(1) * globalScale) / 2;
+            storeOutY = (map.GetLength(0) * globalScale) / 2;
+            MoveTo(storeOutX, storeOutY-1);
         }
 
 
@@ -350,28 +366,28 @@ namespace TextBasedRPGMap
 
                 if (dontMove == false)                                                      //
                 {                                                                           //
-                    switch (map[storeY / globalScale, storeX / globalScale])                //
+                    switch (map[storeOutY / globalScale, storeOutX / globalScale])                //
                     {                                                                       //
                         case '^':                                                           //
-                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);              //
                             Console.BackgroundColor = ConsoleColor.DarkGray;                //
-                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
-                            storeX = x;                                                     //
-                            storeY = y;                                                     //
+                            Console.Write(map[storeOutY / globalScale, storeOutX / globalScale]); //
+                            storeOutX = x;                                                     //
+                            storeOutY = y;                                                     //
                             break;                                                          //
                         case '`':                                                           //
-                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);              //
                             Console.BackgroundColor = ConsoleColor.Green;                   //
-                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
-                            storeX = x;                                                     //  Replace the obsolete player sprite
-                            storeY = y;                                                     //
+                            Console.Write(map[storeOutY / globalScale, storeOutX / globalScale]); //
+                            storeOutX = x;                                                     //  Replace the obsolete player sprite
+                            storeOutY = y;                                                     //
                             break;                                                          //
                         case '*':                                                           //
-                            Console.SetCursorPosition(storeX + 1, storeY + 4);              //
+                            Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);              //
                             Console.BackgroundColor = ConsoleColor.DarkGreen;               //
-                            Console.Write(map[storeY / globalScale, storeX / globalScale]); //
-                            storeX = x;                                                     //
-                            storeY = y;                                                     //
+                            Console.Write(map[storeOutY / globalScale, storeOutX / globalScale]); //
+                            storeOutX = x;                                                     //
+                            storeOutY = y;                                                     //
                             break;                                                          //
                         default:                                                            //
                             break;                                                          //
@@ -380,6 +396,34 @@ namespace TextBasedRPGMap
 
             }
         }
+
+
+        static void StartBattle(int select)
+        {
+            battling = true;
+            Console.ResetColor();
+            string picker;
+            if (select == 0)
+            {
+                picker = "Imp";
+                Console.ForegroundColor = ConsoleColor.Red;
+            }else if (select >= 1 && select <= 4)
+            {
+                picker = "Goblin";
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else
+            {
+                picker = "Slime";
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            Console.Clear();
+            foreach(string line in sprites[picker])
+            {
+                Console.WriteLine(line);
+            }
+        }
+
 
 
     }
