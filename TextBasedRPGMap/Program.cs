@@ -391,6 +391,8 @@ namespace TextBasedRPGMap
             }                                                   //
             Console.WriteLine("┘");                             //
 
+            Console.ResetColor();
+
         }
 
 
@@ -634,7 +636,7 @@ namespace TextBasedRPGMap
         {
             var Rand = new Random();
             playerTurn = false;
-            if (Rand.Next() >= runDifficulties[enemy])
+            if (Rand.Next(1, 16) >= runDifficulties[enemy])
             {
                 DrawBattle();
                 Console.SetCursorPosition(5, 20);
