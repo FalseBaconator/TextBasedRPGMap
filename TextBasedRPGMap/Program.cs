@@ -311,29 +311,29 @@ namespace TextBasedRPGMap
             globalScale = scale;
             Console.Clear();
 
-            Console.WriteLine("┌─────────────────┬─────────────┬─────────────┬─────────────┬─────────────┐"); //Draw Legend Top Border
-            Console.Write("│ ");                                //
-            Console.BackgroundColor = ConsoleColor.DarkGray;    //
-            Console.ForegroundColor = ConsoleColor.Black;       //
-            Console.Write(" ^ = Mountains ");                   //
-            Console.ResetColor();                               //
-            Console.Write(" │ ");                               //
-            Console.BackgroundColor = ConsoleColor.Green;       //
-            Console.ForegroundColor = ConsoleColor.Black;       //
-            Console.Write(" ` = Grass ");                       //
-            Console.ResetColor();                               //
-            Console.Write(" │ ");                               //
-            Console.BackgroundColor = ConsoleColor.Cyan;        //  Draw Legend
-            Console.ForegroundColor = ConsoleColor.Black;       //
-            Console.Write(" ~ = Water ");                       //
-            Console.ResetColor();                               //
-            Console.Write(" │ ");                               //
-            Console.BackgroundColor = ConsoleColor.DarkGreen;   //
-            Console.ForegroundColor = ConsoleColor.Black;       //
-            Console.Write(" * = Trees ");                       //
-            Console.ResetColor();                               //
-            Console.WriteLine(" │  Scale = " + scale + "  │ "); //
-            Console.WriteLine("└─────────────────┴─────────────┴─────────────┴─────────────┴─────────────┘"); //Draw Legend Bottom Border
+            Console.WriteLine("┌─────────────────┬─────────────┬─────────────┬─────────────┬─────────────┬───────────────┐");   //Draw Legend Top Border
+            Console.Write("│ ");                                                                                            //
+            Console.BackgroundColor = ConsoleColor.DarkGray;                                                                //
+            Console.ForegroundColor = ConsoleColor.Black;                                                                   //
+            Console.Write(" ^ = Mountains ");                                                                               //
+            Console.ResetColor();                                                                                           //
+            Console.Write(" │ ");                                                                                           //
+            Console.BackgroundColor = ConsoleColor.Green;                                                                   //
+            Console.ForegroundColor = ConsoleColor.Black;                                                                   //
+            Console.Write(" ` = Grass ");                                                                                   //
+            Console.ResetColor();                                                                                           //
+            Console.Write(" │ ");                                                                                           //
+            Console.BackgroundColor = ConsoleColor.Cyan;                                                                    //  Draw Legend
+            Console.ForegroundColor = ConsoleColor.Black;                                                                   //
+            Console.Write(" ~ = Water ");                                                                                   //
+            Console.ResetColor();                                                                                           //
+            Console.Write(" │ ");                                                                                           //
+            Console.BackgroundColor = ConsoleColor.DarkGreen;                                                               //
+            Console.ForegroundColor = ConsoleColor.Black;                                                                   //
+            Console.Write(" * = Trees ");                                                                                   //
+            Console.ResetColor();                                                                                           //
+            Console.WriteLine(" │  Scale = " + scale + "  │  Coins = " + PlayerStats["Coins"].ToString("000") + "  │ ");    //
+            Console.WriteLine("└─────────────────┴─────────────┴─────────────┴─────────────┴─────────────┴───────────────┘");   //Draw Legend Bottom Border
             
 
             Console.Write("┌");                                 //
