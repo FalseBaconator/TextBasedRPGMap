@@ -600,6 +600,7 @@ namespace TextBasedRPGMap
             }
             else
             {
+                DetermineLoot();
                 EndBattle();
             }
         }
@@ -682,6 +683,35 @@ namespace TextBasedRPGMap
             Console.Write("You Died!");
             Console.ReadKey(true);
         }
+
+        static void DetermineLoot()
+        {
+            var rand = new Random();
+            int potionToGain = 0;
+            int coinToGain = 0;
+            for(int i = 0; i < enemyAtks[enemy]; i++)
+            {
+                if(rand.Next(0, 5) == 0)
+                {
+                    potionToGain++;
+                }
+                else
+                {
+                    coinToGain += rand.Next(2, 6);
+                }
+            }
+            PlayerStats["Potions"] += potionToGain;
+            PlayerStats["Coins"] += coinToGain;
+            DrawBattle();
+            Console.SetCursorPosition(5, 20);
+            Console.Write("You Gained " + potionToGain + " Potions And " + coinToGain + " Coins!");
+            Console.ReadKey(true);
+
+        }
+
+
+
+
 
     }
 }
