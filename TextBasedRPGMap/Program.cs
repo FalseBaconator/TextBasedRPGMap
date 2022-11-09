@@ -19,7 +19,7 @@ namespace TextBasedRPGMap
         static bool dontMove = false;
         static bool battling = false;
         
-        static string picker;   //the current enemy being fought
+        static string enemy;   //the current enemy being fought
         static int menuCursor;
         static int potionHeal = 10;
         static bool playerTurn;
@@ -471,7 +471,7 @@ namespace TextBasedRPGMap
             Console.ResetColor();
             Console.Clear();
 
-            switch (picker)
+            switch (enemy)
             {
                 case "Imp":
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -487,7 +487,7 @@ namespace TextBasedRPGMap
                     break;
             }
 
-            foreach (string line in sprites[picker])
+            foreach (string line in sprites[enemy])
             {
                 Console.WriteLine(line);
             }
@@ -563,21 +563,21 @@ namespace TextBasedRPGMap
             playerTurn = true;
             if (select == 0)
             {
-                picker = "Imp";
+                enemy = "Imp";
                 Console.ForegroundColor = ConsoleColor.Red;
             }
             else if (select >= 1 && select <= 4)
             {
-                picker = "Goblin";
+                enemy = "Goblin";
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             else
             {
-                picker = "Slime";
+                enemy = "Slime";
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
 
-            enemyHP = enemyMaxHealths[picker];
+            enemyHP = enemyMaxHealths[enemy];
             DrawBattle();
                         
         }
@@ -633,7 +633,7 @@ namespace TextBasedRPGMap
         {
             var Rand = new Random();
             playerTurn = false;
-            if (Rand.Next() >= runDifficulties[picker])
+            if (Rand.Next() >= runDifficulties[enemy])
             {
                 DrawBattle();
                 Console.SetCursorPosition(5, 20);
@@ -645,7 +645,7 @@ namespace TextBasedRPGMap
             {
                 DrawBattle();
                 Console.SetCursorPosition(5, 20);
-                Console.Write("The " + picker + " Blocks Your Path!");
+                Console.Write("The " + enemy + " Blocks Your Path!");
                 Console.ReadKey(true);
                 EnemyTurn();
             }
@@ -653,11 +653,34 @@ namespace TextBasedRPGMap
 
         static void EnemyTurn()
         {
-            PlayerStats["HP"]
-
-
-            playerTurn = true;
+            PlayerStats["HP"] -= enemyAtks[enemy];
+            if (PlayerStats["HP"] < 0)
+            {
+                PlayerStats["HP"] = 0;
+            }
             DrawBattle();
+            Console.SetCursorPosition(5, 20);
+            Console.Write("The " + enemy + " Dealt " + enemyAtks[enemy] + " DMG");
+            Console.ReadKey(true);
+            if (PlayerStats["HP"] == 0)
+            {
+                GameOver();
+            }
+            else
+            {
+                playerTurn = true;
+                DrawBattle();
+            }
+        }
+
+        static void GameOver()
+        {
+            gameOver = true;
+            Console.Clear();
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("You Died!");
+            Console.ReadKey(true);
         }
 
     }
