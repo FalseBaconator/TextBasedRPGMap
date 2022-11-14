@@ -367,7 +367,7 @@ namespace TextBasedRPGMap
 
         static void DisplayMap(int scale = 1)
         {
-            currentDungeon = null;
+            inDungeon = false;
 
             Console.CursorVisible = false;
             globalScale = scale;
