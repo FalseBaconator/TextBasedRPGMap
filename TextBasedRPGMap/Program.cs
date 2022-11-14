@@ -619,6 +619,8 @@ namespace TextBasedRPGMap
                         break;
                     case '3':
                         DisplayDungeon(3);
+                        storeDungeonX = 3;
+                        storeDungeonY = 9;
                         MoveToDun(3, 8);
                         break;
                 }                                                           //
@@ -662,7 +664,8 @@ namespace TextBasedRPGMap
 
             if(0 < x && x < dungeons[currentDungeon].GetLength(1) && 0 < y && y < dungeons[currentDungeon].GetLength(0))
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.Black;
 
                 switch(dungeons[currentDungeon][y, x])                                                              //
                 {                                                                                                   //
@@ -726,17 +729,24 @@ namespace TextBasedRPGMap
                             Console.ForegroundColor = ConsoleColor.Black;                           //
                             Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
                             Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                            storeDungeonX = x;                                                      //
+                            storeDungeonY = y;                                                      //
                             break;                                                                  //
                         case '≡':                                                                   //
                             Console.BackgroundColor = ConsoleColor.Gray;                            //
                             Console.ForegroundColor = ConsoleColor.DarkYellow;                      //Replace old sprite
                             Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
                             Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                            storeDungeonX = x;                                                      //
+                            storeDungeonY = y;                                                      //
                             break;                                                                  //
                         default:                                                                    //
-                            Console.ResetColor();                                                   //
+                            Console.BackgroundColor = ConsoleColor.Gray;                            //
+                            Console.ForegroundColor = ConsoleColor.Black;                           //
                             Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
                             Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                            storeDungeonX = x;                                                      //
+                            storeDungeonY = y;                                                      //
                             break;                                                                  //
                     }                                                                               //
                 }                                                                                   //
