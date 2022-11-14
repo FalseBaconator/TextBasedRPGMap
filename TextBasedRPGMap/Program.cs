@@ -72,50 +72,51 @@ namespace TextBasedRPGMap
             {'╚', '█', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝'}
         };
 
-        //static char[,] dungeon2 = new char[,]
-        //{
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''}
-        //};
+        static char[,] dungeon2 = new char[,]
+        {
+            {'╔', '═', '╦', '═', '╦', '═', '╦', '═', '═', '═', '╦', '═', '═', '═', '╗'},
+            {'║', '!', '║', '=', '║', '=', '║', ' ', ' ', '!', '║', '=', ' ', ' ', '║'},
+            {'║', ' ', '║', ' ', '║', ' ', '║', ' ', '═', '═', '╬', '═', '═', ' ', '║'},
+            {'║', ' ', '║', ' ', '║', ' ', '║', ' ', ' ', ' ', '║', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║', ' ', ' ', ' ', '╔', '═', '╣'},
+            {'║', '═', '═', '═', ' ', '═', '╦', '═', '╣', ' ', '═', '═', '╣', '=', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', '║', '!', '║', ' ', ' ', ' ', '║', ' ', '║'},
+            {'║', '!', '║', ' ', '║', ' ', '║', ' ', ' ', ' ', '║', ' ', ' ', ' ', '║'},
+            {'╚', '═', '╩', '█', '╩', '═', '╩', '═', '═', '═', '╩', '═', '═', '═', '╝'}
+        };
 
-        //static char[,] dungeon3 = new char[,]
-        //{
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //   {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''}
-        //};
+        static char[,] dungeon3 = new char[,]
+        {
+            {'╔', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╗'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'╚', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝'}
+        };
 
-        //static char[,] dungeon4 = new char[,]
-        //{
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''},
-        //    {'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''}
-        //};
+        static char[,] dungeon4 = new char[,]
+        {
+            {'╔', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╗'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'║', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '║'},
+            {'╚', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝'}
+        };
 
         static char[][,] dungeons = new char[][,]
         {
             dungeon1
         };
 
+        static char[,] CurrentMap;
 
         static string[] slimeSprite = new string[15]
         {
@@ -313,19 +314,19 @@ namespace TextBasedRPGMap
                 {
                     if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeOutY > 0)                                                //      //
                     {                                                                                                                                   //      //
-                        MoveTo(storeOutX, storeOutY - 1);                                                                                               //      //
+                        MoveToOut(storeOutX, storeOutY - 1);                                                                                               //      //
                     }                                                                                                                                   //      //
                     else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeOutY < map.GetLength(0) * globalScale - 1)        //      //
                     {                                                                                                                                   //      //
-                        MoveTo(storeOutX, storeOutY + 1);                                                                                               //      //
+                        MoveToOut(storeOutX, storeOutY + 1);                                                                                               //      //
                     }                                                                                                                                   //      //Movement if overworld
                     else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeOutX > 0)                                         //      //
                     {                                                                                                                                   //      //
-                        MoveTo(storeOutX - 1, storeOutY);                                                                                               //      //
+                        MoveToOut(storeOutX - 1, storeOutY);                                                                                               //      //
                     }                                                                                                                                   //      //
                     else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeOutX < map.GetLength(1) * globalScale - 1)       //      //
                     {                                                                                                                                   //      //
-                        MoveTo(storeOutX + 1, storeOutY);                                                                                               //      //
+                        MoveToOut(storeOutX + 1, storeOutY);                                                                                               //      //
                     }                                                                                                                                   //
                     Console.ResetColor();
                     var rand = new Random();
@@ -366,6 +367,7 @@ namespace TextBasedRPGMap
 
         static void DisplayMap(int scale = 1)
         {
+            CurrentMap = map;
 
             Console.CursorVisible = false;
             globalScale = scale;
@@ -460,6 +462,7 @@ namespace TextBasedRPGMap
 
             Console.CursorVisible = false;
             char[,] dunMap = dungeons[dungeon];
+            CurrentMap = dungeons[dungeon];
 
             Console.Clear();
 
@@ -556,10 +559,10 @@ namespace TextBasedRPGMap
         {
             storeOutX = (map.GetLength(1) * globalScale) / 2;
             storeOutY = (map.GetLength(0) * globalScale) / 2;
-            MoveTo(storeOutX, storeOutY-1);
+            MoveToOut(storeOutX, storeOutY-1);
         }
 
-        static void MoveTo(int x, int y)
+        static void MoveToOut(int x, int y)
         {
             if(0 <= x/globalScale && x/globalScale <= map.GetLength(1) && 0 <= y/globalScale && y/globalScale <= map.GetLength(0))
             {
@@ -688,30 +691,33 @@ namespace TextBasedRPGMap
             Console.Clear();
             DisplayMap(globalScale);
             Console.ForegroundColor = ConsoleColor.Black;
-            switch (map[storeOutY / globalScale, storeOutX / globalScale])              //
-            {                                                                           //
-                case '^':                                                               //
-                    Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                    Console.BackgroundColor = ConsoleColor.DarkGray;                    //
-                    Console.Write("O");                                                 //
-                    dontMove = false;                                                   //
-                    break;                                                              //
-                case '`':                                                               //
-                    Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                    Console.BackgroundColor = ConsoleColor.Green;                       //
-                    Console.Write("O");                                                 //
-                    dontMove = false;                                                   //  Draw Player, matching the background color to the map
-                    break;                                                              //
-                case '*':                                                               //
-                    Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                    Console.BackgroundColor = ConsoleColor.DarkGreen;                   //
-                    Console.Write("O");                                                 //
-                    dontMove = false;                                                   //
-                    break;                                                              //
-                case '~':                                                               //
-                    dontMove = true;                                                    //
-                    break;                                                              //
-            }                                                                           //
+            if (CurrentMap == map)
+            {
+                switch (map[storeOutY / globalScale, storeOutX / globalScale])              //
+                {                                                                           //
+                    case '^':                                                               //
+                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                        Console.BackgroundColor = ConsoleColor.DarkGray;                    //
+                        Console.Write("O");                                                 //
+                        dontMove = false;                                                   //
+                        break;                                                              //
+                    case '`':                                                               //
+                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                        Console.BackgroundColor = ConsoleColor.Green;                       //
+                        Console.Write("O");                                                 //
+                        dontMove = false;                                                   //  Draw Player, matching the background color to the map
+                        break;                                                              //
+                    case '*':                                                               //
+                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;                   //
+                        Console.Write("O");                                                 //
+                        dontMove = false;                                                   //
+                        break;                                                              //
+                    case '~':                                                               //
+                        dontMove = true;                                                    //
+                        break;                                                              //
+                }                                                                           //
+            }
         }
 
         static void StartBattle(int select)
