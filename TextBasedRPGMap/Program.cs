@@ -53,8 +53,8 @@ namespace TextBasedRPGMap
         // ~ = water cyan
         // * = trees green
         // = = chest dark yellow
-        // = = chest dark yellow
-        // ≡ = mimic print as a chest, dark yellow
+        // ≡ = Open chest dark yellow
+        // ! = mimic print as a chest, dark yellow
         // ° = stone floor gray
         // ═║╣ etc = stone wall dark gray
         // █ = Entrance/Exit
@@ -68,7 +68,7 @@ namespace TextBasedRPGMap
             {'║', '°', '°', '║', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '║'},
             {'╠', '°', '╔', '╩', '═', '═', '═', '╗', '°', '╔', '═', '═', '═', '═', '╣'},
             {'║', '°', '╚', '═', '═', '═', '═', '╝', '°', '╚', '═', '═', '═', '═', '╣'},
-            {'║', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '≡', '║'},
+            {'║', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '°', '!', '║'},
             {'╚', '█', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝'}
         };
 
