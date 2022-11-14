@@ -471,7 +471,7 @@ namespace TextBasedRPGMap
 
             Console.Clear();
 
-            Console.WriteLine("┌─────────────┬─────────────┬────────────┬────────────────────┬──────────────────┬─────────────┬───────────────┐");  //Draw Legend Top Border
+            Console.WriteLine("┌─────────────┬─────────────┬────────────┬────────────────────┬──────────────────┬───────────────┐");  //Draw Legend Top Border
             Console.Write("│ ");                                                                                                //
             Console.BackgroundColor = ConsoleColor.DarkGray;                                                                    //
             Console.ForegroundColor = ConsoleColor.Black;                                                                       //
@@ -497,69 +497,63 @@ namespace TextBasedRPGMap
             Console.ForegroundColor = ConsoleColor.DarkYellow;                                                                  //
             Console.Write(" ≡ = Open Chest ");                                                                                  //
             Console.ResetColor();                                                                                               //
-            Console.WriteLine(" │  Scale = " + globalScale + "  │  Coins = " + PlayerStats["Coins"].ToString("000") + "  │ ");  //
-            Console.WriteLine("└─────────────┴─────────────┴────────────┴────────────────────┴──────────────────┴─────────────┴───────────────┘");  //Draw Legend Bottom Border
+            Console.WriteLine(" │  Coins = " + PlayerStats["Coins"].ToString("000") + "  │ ");                                  //
+            Console.WriteLine("└─────────────┴─────────────┴────────────┴────────────────────┴──────────────────┴───────────────┘");  //Draw Legend Bottom Border
 
 
             Console.Write("┌");                                             //
-            for (int i = 0; i < dunMap.GetLength(1) * globalScale; i++)     //
+            for (int i = 0; i < dunMap.GetLength(1); i++)                   //
             {                                                               //  Draw Top Border
                 Console.Write("─");                                         //
             }                                                               //
             Console.WriteLine("┐");                                         //
 
-            for (int i = 0; i < dunMap.GetLength(0); i++)                               //
-            {                                                                           //
-                for (int j = 0; j < globalScale; j++)                                   //
-                {                                                                       //
-                    Console.Write("│");                                                 //
-                    for (int k = 0; k < dunMap.GetLength(1); k++)                       //
-                    {                                                                   //
-                        for (int l = 0; l < globalScale; l++)                           //
-                        {                                                               //  Draw Map to Scale
-                            switch (dunMap[i, k])                                       //
-                            {                                                           //
-                                case '°':                                               //  //
-                                    Console.BackgroundColor = ConsoleColor.Gray;        //  //
-                                    Console.ForegroundColor = ConsoleColor.Black;       //  //Floor
-                                    Console.Write(dunMap[i, k]);                        //  //
-                                    break;                                              //  //
-                                case '=':                                               //      //
-                                    Console.BackgroundColor = ConsoleColor.Gray;        //      //
-                                    Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
-                                    Console.Write(dunMap[i, k]);                        //      //
-                                    break;                                              //      //
-                                case '≡':                                               //      //Chests
-                                    Console.BackgroundColor = ConsoleColor.Gray;        //      //
-                                    Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
-                                    Console.Write(dunMap[i, k]);                        //      //
-                                    break;                                              //      //
-                                case '!':                                               //          //
-                                    Console.BackgroundColor = ConsoleColor.Gray;        //          //
-                                    Console.ForegroundColor = ConsoleColor.DarkYellow;  //          //Mimic
-                                    Console.Write('=');                                 //          //
-                                    break;                                              //          //
-                                case ' ':                                               //      //
-                                    Console.ResetColor();                               //      //Empty Space
-                                    Console.Write(dunMap[i, k]);                        //      //
-                                    break;                                              //      //
-                                default:                                                //  //
-                                    Console.BackgroundColor = ConsoleColor.DarkGray;    //  //
-                                    Console.ForegroundColor = ConsoleColor.Black;       //  //Walls and Exit
-                                    Console.Write(dunMap[i, k]);                        //  //
-                                    break;                                              //  //
-                            }                                                           //
-                            Console.ResetColor();                                       //
-                        }                                                               //
-                    }                                                                   //
-                    Console.WriteLine("│");                                             //
-                }                                                                       //
-                                                                                        //
-            }                                                                           //
+            for (int i = 0; i < dunMap.GetLength(0); i++)                           //
+            {                                                                       //
+                Console.Write("│");                                                 //
+                for (int j = 0; j < dunMap.GetLength(1); j++)                       //
+                {                                                                   //Draw Map
+                    switch (dunMap[i, j])                                       //
+                    {                                                           //
+                        case '°':                                               //  //
+                            Console.BackgroundColor = ConsoleColor.Gray;        //  //
+                            Console.ForegroundColor = ConsoleColor.Black;       //  //Floor
+                            Console.Write(dunMap[i, j]);                        //  //
+                            break;                                              //  //
+                        case '=':                                               //      //
+                            Console.BackgroundColor = ConsoleColor.Gray;        //      //
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
+                            Console.Write(dunMap[i, j]);                        //      //
+                            break;                                              //      //
+                        case '≡':                                               //      //Chests
+                            Console.BackgroundColor = ConsoleColor.Gray;        //      //
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
+                            Console.Write(dunMap[i, j]);                        //      //
+                            break;                                              //      //
+                        case '!':                                               //          //
+                            Console.BackgroundColor = ConsoleColor.Gray;        //          //
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;  //          //Mimic
+                            Console.Write('=');                                 //          //
+                            break;                                              //          //
+                        case ' ':                                               //      //
+                            Console.ResetColor();                               //      //Empty Space
+                            Console.Write(dunMap[i, j]);                        //      //
+                            break;                                              //      //
+                        default:                                                //  //
+                            Console.BackgroundColor = ConsoleColor.DarkGray;    //  //
+                            Console.ForegroundColor = ConsoleColor.Black;       //  //Walls and Exit
+                            Console.Write(dunMap[i, j]);                        //  //
+                            break;                                              //  //
+                    }                                                           //
+                    Console.ResetColor();                                       //
+                }                                                               //
+                Console.WriteLine("│");                                         //
+                                                                                //
+            }                                                                   //
 
 
             Console.Write("└");                                         //
-            for (int i = 0; i < dunMap.GetLength(1) * globalScale; i++)    //
+            for (int i = 0; i < dunMap.GetLength(1); i++)               //
             {                                                           //  Draw Bottom Border
                 Console.Write("─");                                     //
             }                                                           //
