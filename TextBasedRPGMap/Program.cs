@@ -116,7 +116,8 @@ namespace TextBasedRPGMap
             dungeon1, dungeon2, dungeon3, dungeon4
         };
 
-        static char[,] CurrentMap;
+        static bool inDungeon = false;
+        static int currentDungeon;
 
         static string[] slimeSprite = new string[15]
         {
@@ -366,7 +367,7 @@ namespace TextBasedRPGMap
 
         static void DisplayMap(int scale = 1)
         {
-            CurrentMap = map;
+            currentDungeon = null;
 
             Console.CursorVisible = false;
             globalScale = scale;
@@ -471,7 +472,7 @@ namespace TextBasedRPGMap
 
             Console.CursorVisible = false;
             char[,] dunMap = dungeons[dungeon];
-            CurrentMap = dungeons[dungeon];
+            currentDungeon = dungeon;
 
             Console.Clear();
 
@@ -657,7 +658,63 @@ namespace TextBasedRPGMap
 
         static void MoveToDun(int x, int y)
         {
+            if(0 < x && x < dungeons[currentDungeon].GetLength(1) && 0 < y && y < dungeons[currentDungeon].GetLength(0))
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
 
+                switch(dungeons[currentDungeon][y, x])
+                {
+                    case '°':
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.Write('O');
+                        dontMove = false;
+                        break;
+                    case '≡':
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.Write('O');
+                        dontMove = false;
+                        break;
+                    case '=':
+                        dungeons[currentDungeon][y, x] = '≡';
+                        var rand = new Random();
+                        int potionToGain = 0;
+                        int coinToGain = 0;
+                        for (int i = 0; i < 10; i++)
+                        {
+                            if (rand.Next(0, 5) == 0)
+                            {
+                                potionToGain++;
+                            }
+                            else
+                            {
+                                coinToGain += rand.Next(2, 6);
+                            }
+                        }
+                        PlayerStats["Potions"] += potionToGain;
+                        PlayerStats["Coins"] += coinToGain;
+                        DisplayDungeon(currentDungeon);
+                        Console.SetCursorPosition(x + 1, y + 4);
+                        Console.Write('O');
+                        Console.SetCursorPosition(5, 15);
+                        Console.Write("You Gained " + potionToGain + " Potions And " + coinToGain + " Coins!");
+                        Console.ReadKey(true);
+                        dontMove = false;
+                        break;
+                    case '!':
+                        dungeons[currentDungeon][y, x] = '°';
+                        enemy = "Mimic";
+                        enemyHP = enemyMaxHealths[enemy];
+                        DrawBattle();
+                        break;
+                    case '█':
+                        DisplayMap(globalScale);
+                        MoveToOut(storeOutX + 1, storeOutY);
+                        break;
+                    default:
+                        dontMove = true;
+                        break;
+                }
+            }
         }
 
         static void DrawBattle()
@@ -724,7 +781,7 @@ namespace TextBasedRPGMap
             Console.Clear();
             DisplayMap(globalScale);
             Console.ForegroundColor = ConsoleColor.Black;
-            if (CurrentMap == map)
+            if (inDungeon == false)
             {
                 switch (map[storeOutY / globalScale, storeOutX / globalScale])              //
                 {                                                                           //
