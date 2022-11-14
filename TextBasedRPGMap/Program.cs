@@ -36,11 +36,11 @@ namespace TextBasedRPGMap
         {
         {'^','^','^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'^','^','`','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`'},
-        {'^','^','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`','`','`'},
-        {'^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'^','^','`','`','`','*','*','1','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`','`','`'},
+        {'^','0','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','`','`','`','`','`','`'},
+        {'`','`','`','~','~','~','~','2','`','`','`','`','`','`','`','`','`','`','`','`','`','3','^','^','`','`','`','`','`','`'},
         {'`','`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`','`','`'},
         {'`','`','`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`'},
         {'`','`','`','`','`','`','`','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
@@ -299,7 +299,6 @@ namespace TextBasedRPGMap
                 }                                                                                                                               //  //
             }                                                                                                                                   //
 
-            DisplayDungeon(0);
 
             StartGameLoop();    //Start the game
             while(gameOver == false)                                                                                                            //Loop
@@ -380,7 +379,7 @@ namespace TextBasedRPGMap
             Console.Write(" ^ = Mountains ");                                                                               //
             Console.ResetColor();                                                                                           //
             Console.Write(" │ ");                                                                                           //
-            Console.BackgroundColor = ConsoleColor.DarkGray;                                                                //
+            Console.BackgroundColor = ConsoleColor.Green;                                                                   //
             Console.ForegroundColor = ConsoleColor.Black;                                                                   //
             Console.Write(" █ = Dungeon ");                                                                                 //
             Console.ResetColor();                                                                                           //
@@ -424,24 +423,29 @@ namespace TextBasedRPGMap
                                 case '^':                                               //
                                     Console.BackgroundColor = ConsoleColor.DarkGray;    //
                                     Console.ForegroundColor = ConsoleColor.Black;       //
+                                    Console.Write(map[i, k]);                           //
                                     break;                                              //
                                 case '`':                                               //
                                     Console.BackgroundColor = ConsoleColor.Green;       //
                                     Console.ForegroundColor = ConsoleColor.Black;       //
+                                    Console.Write(map[i, k]);                           //
                                     break;                                              //
                                 case '~':                                               //
                                     Console.BackgroundColor = ConsoleColor.Cyan;        //
                                     Console.ForegroundColor = ConsoleColor.Black;       //
+                                    Console.Write(map[i, k]);                           //
                                     break;                                              //
                                 case '*':                                               //
                                     Console.BackgroundColor = ConsoleColor.DarkGreen;   //
                                     Console.ForegroundColor = ConsoleColor.Black;       //
+                                    Console.Write(map[i, k]);                           //
                                     break;                                              //
                                 default:                                                //
-                                    Console.ResetColor();                               //
+                                    Console.BackgroundColor = ConsoleColor.Green;       //
+                                    Console.ForegroundColor = ConsoleColor.Black;       //
+                                    Console.Write('█');                                 //
                                     break;                                              //
                             }                                                           //
-                            Console.Write(map[i, k]);                                   //
                             Console.ResetColor();                                       //
                         }                                                               //
                     }                                                                   //
@@ -600,6 +604,22 @@ namespace TextBasedRPGMap
                     case '~':                                               //
                         dontMove = true;                                    //
                         break;                                              //
+                    case '0':
+                        DisplayDungeon(0);
+                        //move to dungeon
+                        break;
+                    case '1':
+                        DisplayDungeon(1);
+                        //move to dungeon
+                        break;
+                    case '2':
+                        DisplayDungeon(2);
+                        //move to dungeon
+                        break;
+                    case '3':
+                        DisplayDungeon(3);
+                        //move to dungeon
+                        break;
                 }                                                           //
 
                 if (dontMove == false)                                                              //
