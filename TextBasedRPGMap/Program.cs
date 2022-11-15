@@ -312,28 +312,57 @@ namespace TextBasedRPGMap
                 }                                                                                                                               //  //
                 if (battling == false)
                 {
-                    if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeOutY > 0)                                                //      //
-                    {                                                                                                                                   //      //
-                        MoveToOut(storeOutX, storeOutY - 1);                                                                                               //      //
-                    }                                                                                                                                   //      //
-                    else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeOutY < map.GetLength(0) * globalScale - 1)        //      //
-                    {                                                                                                                                   //      //
-                        MoveToOut(storeOutX, storeOutY + 1);                                                                                               //      //
-                    }                                                                                                                                   //      //Movement if overworld
-                    else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeOutX > 0)                                         //      //
-                    {                                                                                                                                   //      //
-                        MoveToOut(storeOutX - 1, storeOutY);                                                                                               //      //
-                    }                                                                                                                                   //      //
-                    else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeOutX < map.GetLength(1) * globalScale - 1)       //      //
-                    {                                                                                                                                   //      //
-                        MoveToOut(storeOutX + 1, storeOutY);                                                                                               //      //
-                    }                                                                                                                                   //
-                    Console.ResetColor();
-                    var rand = new Random();
-                    if (rand.Next(0, 10) == 1)
+                    if(inDungeon == false)
                     {
-                        StartBattle(rand.Next(0, 10));
-                    }                                                                                                                               //
+                        if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeOutY > 0)                                                //      //
+                        {                                                                                                                                   //      //
+                            MoveToOut(storeOutX, storeOutY - 1);                                                                                            //      //
+                        }                                                                                                                                   //      //
+                        else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeOutY < map.GetLength(0) * globalScale - 1)        //      //
+                        {                                                                                                                                   //      //
+                            MoveToOut(storeOutX, storeOutY + 1);                                                                                            //      //
+                        }                                                                                                                                   //      //Movement if overworld
+                        else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeOutX > 0)                                         //      //
+                        {                                                                                                                                   //      //
+                            MoveToOut(storeOutX - 1, storeOutY);                                                                                            //      //
+                        }                                                                                                                                   //      //
+                        else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeOutX < map.GetLength(1) * globalScale - 1)       //      //
+                        {                                                                                                                                   //      //
+                            MoveToOut(storeOutX + 1, storeOutY);                                                                                            //      //
+                        }                                                                                                                                   //
+                        Console.ResetColor();
+                        var rand = new Random();
+                        if (rand.Next(0, 10) == 1)
+                        {
+                            StartBattle(rand.Next(0, 10));
+                        }                                                                                                                                   //
+
+                    }
+                    else
+                    {
+                        if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && storeDungeonY > 0)                                                //      //
+                        {                                                                                                                                   //      //
+                            MoveToDun(storeDungeonX, storeDungeonY - 1);                                                                                            //      //
+                        }                                                                                                                                   //      //
+                        else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && storeDungeonY < dungeons[currentDungeon].GetLength(0))     //      //
+                        {                                                                                                                                   //      //
+                            MoveToDun(storeDungeonX, storeDungeonY + 1);                                                                                            //      //
+                        }                                                                                                                                   //      //Movement if dungeon
+                        else if ((input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.A) && storeDungeonX > 0)                                         //      //
+                        {                                                                                                                                   //      //
+                            MoveToDun(storeDungeonX - 1, storeDungeonY);                                                                                            //      //
+                        }                                                                                                                                   //      //
+                        else if ((input.Key == ConsoleKey.RightArrow || input.Key == ConsoleKey.D) && storeDungeonX < dungeons[currentDungeon].GetLength(1))    //      //
+                        {                                                                                                                                   //      //
+                            MoveToDun(storeDungeonX + 1, storeDungeonY);                                                                                            //      //
+                        }                                                                                                                                   //
+                        Console.ResetColor();
+                        var rand = new Random();
+                        //if (rand.Next(0, 7) == 1)
+                        //{
+                        //    StartBattle(rand.Next(0, 7));
+                        //}                                                                                                                                   //
+                    }
                 }
                 else
                 {
@@ -473,6 +502,7 @@ namespace TextBasedRPGMap
             Console.CursorVisible = false;
             char[,] dunMap = dungeons[dungeon];
             currentDungeon = dungeon;
+            inDungeon = true;
 
             Console.Clear();
 
@@ -620,8 +650,9 @@ namespace TextBasedRPGMap
                     case '3':
                         DisplayDungeon(3);
                         storeDungeonX = 3;
-                        storeDungeonY = 9;
-                        MoveToDun(3, 8);
+                        storeDungeonY = 3;
+                        MoveToDun(2, 3);
+                        return;
                         break;
                 }                                                           //
 
@@ -662,95 +693,105 @@ namespace TextBasedRPGMap
         {
             Console.ResetColor();
 
-            if(0 < x && x < dungeons[currentDungeon].GetLength(1) && 0 < y && y < dungeons[currentDungeon].GetLength(0))
-            {
-                Console.BackgroundColor = ConsoleColor.Gray;
-                Console.ForegroundColor = ConsoleColor.Black;
+            
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(0, 15);
+            Console.WriteLine(x + " " + y);
+            Console.WriteLine(currentDungeon);
 
-                switch(dungeons[currentDungeon][y, x])                                                              //
-                {                                                                                                   //
-                    case '°':                                                                                       //
-                        Console.SetCursorPosition(x + 1, y + 4);                                                    //
-                        Console.Write('O');                                                                         //
-                        dontMove = false;                                                                           //
-                        break;                                                                                      //Move Player
-                    case '≡':                                                                                       //
-                        Console.SetCursorPosition(x + 1, y + 4);                                                    //
-                        Console.Write('O');                                                                         //
-                        dontMove = false;                                                                           //
-                        break;                                                                                      //
-                    case '=':                                                                                       //  //
-                        dungeons[currentDungeon][y, x] = '≡';                                                       //  //
-                        var rand = new Random();                                                                    //  //
-                        int potionToGain = 0;                                                                       //  //
-                        int coinToGain = 0;                                                                         //  //
-                        for (int i = 0; i < 10; i++)                                                                //  //
-                        {                                                                                           //  //
-                            if (rand.Next(0, 5) == 0)                                                               //  //
-                            {                                                                                       //  //
-                                potionToGain++;                                                                     //  //
-                            }                                                                                       //  //
-                            else                                                                                    //  //
-                            {                                                                                       //  //
-                                coinToGain += rand.Next(2, 6);                                                      //  //
-                            }                                                                                       //  //Determine Loot from Chest
-                        }                                                                                           //  //
-                        PlayerStats["Potions"] += potionToGain;                                                     //  //
-                        PlayerStats["Coins"] += coinToGain;                                                         //  //
-                        DisplayDungeon(currentDungeon);                                                             //  //
-                        Console.SetCursorPosition(x + 1, y + 4);                                                    //  //
-                        Console.Write('O');                                                                         //  //
-                        Console.SetCursorPosition(5, 15);                                                           //  //
-                        Console.Write("You Gained " + potionToGain + " Potions And " + coinToGain + " Coins!");     //  //
-                        Console.ReadKey(true);                                                                      //  //
-                        dontMove = false;                                                                           //  //
-                        break;                                                                                      //  //
-                    case '!':                                                                                       //      //
-                        dungeons[currentDungeon][y, x] = '°';                                                       //      //
-                        enemy = "Mimic";                                                                            //      //
-                        enemyHP = enemyMaxHealths[enemy];                                                           //      //Start Mimic Fight
-                        DrawBattle();                                                                               //      //
-                        break;                                                                                      //      //
-                    case '█':                                                                                       //
-                        DisplayMap(globalScale);                                                                    //
-                        MoveToOut(storeOutX + 1, storeOutY);                                                        //
-                        break;                                                                                      //
-                    default:                                                                                        //
-                        dontMove = true;                                                                            //
-                        break;                                                                                      //
-                }                                                                                                   //
+            switch(dungeons[currentDungeon][y, x])                                                              //
+            {                                                                                                   //
+                case '°':                                                                                       //
+                    Console.SetCursorPosition(x + 1, y + 4);                                                    //
+                    Console.Write('O');                                                                         //
+                    dontMove = false;                                                                           //
+                    break;                                                                                      //Move Player
+                case '≡':                                                                                       //
+                    Console.SetCursorPosition(x + 1, y + 4);                                                    //
+                    Console.Write('O');                                                                         //
+                    dontMove = false;                                                                           //
+                    break;                                                                                      //
+                case '=':                                                                                       //  //
+                    dungeons[currentDungeon][y, x] = '≡';                                                       //  //
+                    var rand = new Random();                                                                    //  //
+                    int potionToGain = 0;                                                                       //  //
+                    int coinToGain = 0;                                                                         //  //
+                    for (int i = 0; i < 10; i++)                                                                //  //
+                    {                                                                                           //  //
+                        if (rand.Next(0, 5) == 0)                                                               //  //
+                        {                                                                                       //  //
+                            potionToGain++;                                                                     //  //
+                        }                                                                                       //  //
+                        else                                                                                    //  //
+                        {                                                                                       //  //
+                            coinToGain += rand.Next(2, 6);                                                      //  //
+                        }                                                                                       //  //Determine Loot from Chest
+                    }                                                                                           //  //
+                    PlayerStats["Potions"] += potionToGain;                                                     //  //
+                    PlayerStats["Coins"] += coinToGain;                                                         //  //
+                    Console.Clear();                                                                            //  //
+                    DisplayDungeon(currentDungeon);                                                             //  //
+                    Console.SetCursorPosition(x + 1, y + 4);                                                    //  //
+                    Console.BackgroundColor = ConsoleColor.Gray;                                                //  //
+                    Console.ForegroundColor = ConsoleColor.Black;                                               //  //
+                    Console.Write('O');                                                                         //  //
+                    Console.SetCursorPosition(5, 15);                                                           //  //
+                    Console.Write("You Gained " + potionToGain + " Potions And " + coinToGain + " Coins!");     //  //
+                    Console.ReadKey(true);                                                                      //  //
+                    dontMove = false;                                                                           //  //
+                    break;                                                                                      //  //
+                case '!':                                                                                       //      //
+                    dungeons[currentDungeon][y, x] = '°';                                                       //      //
+                    enemy = "Mimic";                                                                            //      //
+                    enemyHP = enemyMaxHealths[enemy];                                                           //      //Start Mimic Fight
+                    menuCursor = 0;                                                                             //      //
+                    battling = true;                                                                            //      //
+                    playerTurn = true;                                                                          //      //
+                    DrawBattle();                                                                               //      //
+                    return;                                                                                     //      //
+                    break;                                                                                      //      //
+                case '█':                                                                                       //
+                    DisplayMap(globalScale);                                                                    //
+                    MoveToOut(storeOutX + 1, storeOutY);                                                        //
+                    break;                                                                                      //
+                default:                                                                                        //
+                    dontMove = true;                                                                            //
+                    break;                                                                                      //
+            }                                                                                                   //
 
-                if (dontMove == false)                                                              //
-                {                                                                                   //
-                    switch (dungeons[currentDungeon][storeDungeonY, storeDungeonX])                 //
-                    {                                                                               //
-                        case '°':                                                                   //
-                            Console.BackgroundColor = ConsoleColor.Gray;                            //
-                            Console.ForegroundColor = ConsoleColor.Black;                           //
-                            Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
-                            Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
-                            storeDungeonX = x;                                                      //
-                            storeDungeonY = y;                                                      //
-                            break;                                                                  //
-                        case '≡':                                                                   //
-                            Console.BackgroundColor = ConsoleColor.Gray;                            //
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;                      //Replace old sprite
-                            Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
-                            Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
-                            storeDungeonX = x;                                                      //
-                            storeDungeonY = y;                                                      //
-                            break;                                                                  //
-                        default:                                                                    //
-                            Console.BackgroundColor = ConsoleColor.Gray;                            //
-                            Console.ForegroundColor = ConsoleColor.Black;                           //
-                            Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
-                            Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
-                            storeDungeonX = x;                                                      //
-                            storeDungeonY = y;                                                      //
-                            break;                                                                  //
-                    }                                                                               //
-                }                                                                                   //
-            }
+            if (dontMove == false)                                                              //
+            {                                                                                   //
+                switch (dungeons[currentDungeon][storeDungeonY, storeDungeonX])                 //
+                {                                                                               //
+                    case '°':                                                                   //
+                        Console.BackgroundColor = ConsoleColor.Gray;                            //
+                        Console.ForegroundColor = ConsoleColor.Black;                           //
+                        Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
+                        Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                        storeDungeonX = x;                                                      //
+                        storeDungeonY = y;                                                      //
+                        break;                                                                  //
+                    case '≡':                                                                   //
+                        Console.BackgroundColor = ConsoleColor.Gray;                            //
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;                      //Replace old sprite
+                        Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
+                        //Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                        Console.Write('≡');
+                        storeDungeonX = x;                                                      //
+                        storeDungeonY = y;                                                      //
+                        break;                                                                  //
+                    default:                                                                    //
+                        Console.BackgroundColor = ConsoleColor.Gray;                            //
+                        Console.ForegroundColor = ConsoleColor.Black;                           //
+                        Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
+                        Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                        storeDungeonX = x;                                                      //
+                        storeDungeonY = y;                                                      //
+                        break;                                                                  //
+                }                                                                               //
+            }                                                                                   //
+            
         }
 
         static void DrawBattle()
