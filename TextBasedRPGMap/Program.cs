@@ -401,6 +401,7 @@ namespace TextBasedRPGMap
             Console.CursorVisible = false;
             globalScale = scale;
             Console.Clear();
+            Console.ResetColor();
 
             Console.WriteLine("┌─────────────────┬───────────────┬─────────────┬─────────────┬─────────────┬─────────────┬───────────────┐");   //Draw Legend Top Border
             Console.Write("│ ");                                                                                            //
@@ -637,21 +638,30 @@ namespace TextBasedRPGMap
                         break;                                              //
                     case '0':
                         DisplayDungeon(0);
-                        //move to dungeon
+                        storeDungeonX = 1;
+                        storeDungeonY = 6;
+                        MoveToDun(1, 7);
+                        return;
                         break;
                     case '1':
                         DisplayDungeon(1);
-                        //move to dungeon
+                        storeDungeonX = 3;
+                        storeDungeonY = 6;
+                        MoveToDun(3, 7);
+                        return;
                         break;
                     case '2':
                         DisplayDungeon(2);
-                        //move to dungeon
+                        storeDungeonX = 13;
+                        storeDungeonY = 6;
+                        MoveToDun(13, 7);
+                        return;
                         break;
                     case '3':
                         DisplayDungeon(3);
-                        storeDungeonX = 3;
-                        storeDungeonY = 3;
-                        MoveToDun(2, 3);
+                        storeDungeonX = 2;
+                        storeDungeonY = 6;
+                        MoveToDun(2, 7);
                         return;
                         break;
                 }                                                           //
@@ -739,6 +749,12 @@ namespace TextBasedRPGMap
                     Console.SetCursorPosition(5, 15);                                                           //  //
                     Console.Write("You Gained " + potionToGain + " Potions And " + coinToGain + " Coins!");     //  //
                     Console.ReadKey(true);                                                                      //  //
+                    Console.Clear();                                                                            //  //
+                    DisplayDungeon(currentDungeon);                                                             //  //
+                    Console.SetCursorPosition(x + 1, y + 4);                                                    //  //
+                    Console.BackgroundColor = ConsoleColor.Gray;                                                //  //
+                    Console.ForegroundColor = ConsoleColor.Black;                                               //  //
+                    Console.Write('O');                                                                         //  //
                     dontMove = false;                                                                           //  //
                     break;                                                                                      //  //
                 case '!':                                                                                       //      //
@@ -752,8 +768,12 @@ namespace TextBasedRPGMap
                     return;                                                                                     //      //
                     break;                                                                                      //      //
                 case '█':                                                                                       //
+                    Console.ResetColor();
                     DisplayMap(globalScale);                                                                    //
-                    MoveToOut(storeOutX + 1, storeOutY);                                                        //
+                    storeOutX++;
+                    storeOutY++;
+                    MoveToOut(storeOutX - 1, storeOutY - 1);                                                        //
+                    return;
                     break;                                                                                      //
                 default:                                                                                        //
                     dontMove = true;                                                                            //
@@ -776,8 +796,8 @@ namespace TextBasedRPGMap
                         Console.BackgroundColor = ConsoleColor.Gray;                            //
                         Console.ForegroundColor = ConsoleColor.DarkYellow;                      //Replace old sprite
                         Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
-                        //Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
-                        Console.Write('≈');
+                        Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
+                        //Console.Write('≈');
                         storeDungeonX = x;                                                      //
                         storeDungeonY = y;                                                      //
                         break;                                                                  //
@@ -856,34 +876,42 @@ namespace TextBasedRPGMap
         {
             battling = false;
             Console.Clear();
-            DisplayMap(globalScale);
             Console.ForegroundColor = ConsoleColor.Black;
             if (inDungeon == false)
             {
-                switch (map[storeOutY / globalScale, storeOutX / globalScale])              //
-                {                                                                           //
-                    case '^':                                                               //
-                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                        Console.BackgroundColor = ConsoleColor.DarkGray;                    //
-                        Console.Write("O");                                                 //
-                        dontMove = false;                                                   //
-                        break;                                                              //
-                    case '`':                                                               //
-                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                        Console.BackgroundColor = ConsoleColor.Green;                       //
-                        Console.Write("O");                                                 //
-                        dontMove = false;                                                   //  Draw Player, matching the background color to the map
-                        break;                                                              //
-                    case '*':                                                               //
-                        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;                   //
-                        Console.Write("O");                                                 //
-                        dontMove = false;                                                   //
-                        break;                                                              //
-                    case '~':                                                               //
-                        dontMove = true;                                                    //
-                        break;                                                              //
-                }                                                                           //
+                DisplayMap(globalScale);
+                //switch (map[storeOutY / globalScale, storeOutX / globalScale])              //
+                //{                                                                           //
+                //    case '^':                                                               //
+                //        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                //        Console.BackgroundColor = ConsoleColor.DarkGray;                    //
+                //        Console.Write("O");                                                 //
+                //        dontMove = false;                                                   //
+                //        break;                                                              //
+                //    case '`':                                                               //
+                //        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                //        Console.BackgroundColor = ConsoleColor.Green;                       //
+                //        Console.Write("O");                                                 //
+                //        dontMove = false;                                                   //  Draw Player, matching the background color to the map
+                //        break;                                                              //
+                //    case '*':                                                               //
+                //        Console.SetCursorPosition(storeOutX + 1, storeOutY + 4);            //
+                //        Console.BackgroundColor = ConsoleColor.DarkGreen;                   //
+                //        Console.Write("O");                                                 //
+                //        dontMove = false;                                                   //
+                //        break;                                                              //
+                //    case '~':                                                               //
+                //        dontMove = true;                                                    //
+                //        break;                                                              //
+                //}                                                                           //
+                storeOutY--;
+                MoveToOut(storeOutX, storeOutY + 1);
+            }
+            else
+            {
+                DisplayDungeon(currentDungeon);
+                storeDungeonY--;
+                MoveToDun(storeDungeonX, storeDungeonY + 1);
             }
         }
 
