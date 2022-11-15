@@ -248,6 +248,47 @@ namespace TextBasedRPGMap
         };
         static int enemyHP;
 
+
+        static string[] playerSprite = new string[15]
+        {
+            "                    ||                      ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "             ┌──────────┐                   ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            "
+        };
+
+        static string[] shopSprite = new string[15]
+        {
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            "
+        };
+
+
+
         static void Main(string[] args)
         {
             Console.Title = "Map Project";
