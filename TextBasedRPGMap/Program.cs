@@ -53,7 +53,7 @@ namespace TextBasedRPGMap
         // ~ = water cyan
         // * = trees green
         // = = chest dark yellow
-        // ≡ = Open chest dark yellow
+        // ≈ = Open chest dark yellow
         // ! = mimic print as a chest, dark yellow
         // ° = stone floor gray
         // ═║╣ etc = stone wall dark gray
@@ -530,7 +530,7 @@ namespace TextBasedRPGMap
             Console.Write(" │ ");                                                                                               //
             Console.BackgroundColor = ConsoleColor.Gray;                                                                        //
             Console.ForegroundColor = ConsoleColor.DarkYellow;                                                                  //
-            Console.Write(" ≡ = Open Chest ");                                                                                  //
+            Console.Write(" ≈ = Open Chest ");                                                                                  //
             Console.ResetColor();                                                                                               //
             Console.WriteLine(" │  Coins = " + PlayerStats["Coins"].ToString("000") + "  │ ");                                  //
             Console.WriteLine("└─────────────┴─────────────┴────────────┴────────────────────┴──────────────────┴───────────────┘");  //Draw Legend Bottom Border
@@ -560,7 +560,7 @@ namespace TextBasedRPGMap
                             Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
                             Console.Write(dunMap[i, j]);                        //      //
                             break;                                              //      //
-                        case '≡':                                               //      //Chests
+                        case '≈':                                               //      //Chests
                             Console.BackgroundColor = ConsoleColor.Gray;        //      //
                             Console.ForegroundColor = ConsoleColor.DarkYellow;  //      //
                             Console.Write(dunMap[i, j]);                        //      //
@@ -707,13 +707,13 @@ namespace TextBasedRPGMap
                     Console.Write('O');                                                                         //
                     dontMove = false;                                                                           //
                     break;                                                                                      //Move Player
-                case '≡':                                                                                       //
+                case '≈':                                                                                       //
                     Console.SetCursorPosition(x + 1, y + 4);                                                    //
                     Console.Write('O');                                                                         //
                     dontMove = false;                                                                           //
                     break;                                                                                      //
                 case '=':                                                                                       //  //
-                    dungeons[currentDungeon][y, x] = '≡';                                                       //  //
+                    dungeons[currentDungeon][y, x] = '≈';                                                       //  //
                     var rand = new Random();                                                                    //  //
                     int potionToGain = 0;                                                                       //  //
                     int coinToGain = 0;                                                                         //  //
@@ -772,12 +772,12 @@ namespace TextBasedRPGMap
                         storeDungeonX = x;                                                      //
                         storeDungeonY = y;                                                      //
                         break;                                                                  //
-                    case '≡':                                                                   //
+                    case '≈':                                                                   //
                         Console.BackgroundColor = ConsoleColor.Gray;                            //
                         Console.ForegroundColor = ConsoleColor.DarkYellow;                      //Replace old sprite
                         Console.SetCursorPosition(storeDungeonX + 1, storeDungeonY + 4);        //
                         //Console.Write(dungeons[currentDungeon][storeDungeonY, storeDungeonX]);  //
-                        Console.Write('≡');
+                        Console.Write('≈');
                         storeDungeonX = x;                                                      //
                         storeDungeonY = y;                                                      //
                         break;                                                                  //
