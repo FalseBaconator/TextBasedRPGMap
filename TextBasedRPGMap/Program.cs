@@ -210,18 +210,21 @@ namespace TextBasedRPGMap
             //{"", },
             //{"", },
         };
-        static Dictionary<string, int> ArmorRanks = new Dictionary<string, int> //rank and health provided
+        static Dictionary<string, int> ArmorStats = new Dictionary<string, int> //rank and health provided
         {
             {"Wood",  10},
             {"Iron",  20},
             {"Mithril",  30}
         };
-        static Dictionary<string, int> WeaponRanks = new Dictionary<string, int> //name and damage dealt
+        static Dictionary<string, int> WeaponStats = new Dictionary<string, int> //name and damage dealt
         {
             {"Wood", 2},
             {"Iron",  4},
             {"Enchanted", 6}
         };
+        static int currentWeaponType = 0;
+        static string currentWeaponRank = "Wood";
+        static string currentArmorRank = "Wood";
 
         static Dictionary<string, string[]> sprites = new Dictionary<string, string[]>
         {
@@ -280,6 +283,33 @@ namespace TextBasedRPGMap
             "         │               │└─┘               "
         };
 
+
+        static string[] swordSprite = new string[15]
+        {
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                     ┌──┐   ",
+            "                                    ┌┘ ┌┘   ",
+            "                                   ┌┘ ┌┘    ",
+            "                                  ┌┘ ┌┘     ",
+            "                                 ┌┘ ┌┘      ",
+            "                                ┌┘ ┌┘       ",
+            "                              ┌─┘ ┌┘        ",
+            "                              └┐ ┌┘         ",
+            "                               └─┘          ",
+            "                                            ",
+            "                                            "
+        };
+
+
+
+        static string[][] weapons = new string[][]
+        {
+            swordSprite
+        };
+
         static string[] shopSprite = new string[15]
         {
             "  ┌──────────────────────────────────────┐  ",
@@ -299,16 +329,28 @@ namespace TextBasedRPGMap
             "  │                                      │  "
         };
 
+        static char[] shopWoodChars = new char[]
+        {
+            '┌','─','│','┐','┘','└','┬','┴'
+        };
+
+        static char[] shopMetalChars = new char[]
+        {
+            '╔', '╗', '╚', '╝', '║', '═', '╬'
+        };
+
 
 
         static void Main(string[] args)
         {
+            //Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            //Console.SetWindowPosition(0, 0);
             Console.Title = "Map Project";
 
             Console.CursorVisible = false;
 
 
-            Console.WriteLine("Displaying map with no scale imput");        //
+            Console.WriteLine("Displaying map with no scale input");        //
             Console.ReadKey(true);                                          //
             DisplayMap();                                                   //
             Console.ReadKey(true);                                          //
@@ -936,6 +978,8 @@ namespace TextBasedRPGMap
 
             Console.ResetColor();
 
+            DrawPlayer(27);
+
         }
 
         static void EndBattle()
@@ -1139,7 +1183,55 @@ namespace TextBasedRPGMap
 
         }
 
+        static void DrawPlayer(int spaceAbove)
+        {
+            Console.ResetColor();
+            if(currentArmorRank == "Wood")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+            }else if(currentArmorRank == "Iron")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
 
+            Console.SetCursorPosition(0, spaceAbove);
+            for (int i = 0; i < playerSprite.Length; i++)
+            {
+                Console.WriteLine(playerSprite[i]);
+            }
+
+            if (currentArmorRank == "Wood")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+            }
+            else if (currentArmorRank == "Iron")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+
+            Console.SetCursorPosition(0, spaceAbove);
+
+            for (int i = 0; i < weapons[currentWeaponType].Length; i++)
+            {
+                for(int j = 0; j < weapons[currentWeaponType][i].Length; j++)
+                {
+                    Console.SetCursorPosition(j, spaceAbove+i);
+                    if(weapons[currentWeaponType][i][j] != ' ')
+                    {
+                        Console.Write(weapons[currentWeaponType][i][j]);
+                    }
+                }
+            }
+
+        }
 
 
 
