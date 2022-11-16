@@ -201,14 +201,26 @@ namespace TextBasedRPGMap
         static Dictionary<string, int> PlayerStats = new Dictionary<string, int>
         {
             {"HP", 10},
-            {"Max HP", 10},
-            {"ATK", 2},
+            {"Max HP", 10}, //wood armor
+            {"ATK", 2}, //wood sword
             {"Potions", 0},
             {"Coins", 0},
             //{"", },
             //{"", },
             //{"", },
             //{"", },
+        };
+        static Dictionary<string, int> ArmorRanks = new Dictionary<string, int> //rank and health provided
+        {
+            {"Wood",  10},
+            {"Iron",  20},
+            {"Mithril",  30}
+        };
+        static Dictionary<string, int> WeaponRanks = new Dictionary<string, int> //name and damage dealt
+        {
+            {"Wood", 2},
+            {"Iron",  4},
+            {"Enchanted", 6}
         };
 
         static Dictionary<string, string[]> sprites = new Dictionary<string, string[]>
@@ -270,21 +282,21 @@ namespace TextBasedRPGMap
 
         static string[] shopSprite = new string[15]
         {
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            ",
-            "                                            "
+            "  ┌──────────────────────────────────────┐  ",
+            "  │       ┌───  │  │  ┌──┐  ┌──┐         │  ",
+            "  │       └──┐  ├──┤  │  │  ├──┘         │  ",
+            "  │       ───┘  │  │  └──┘  │            │  ",
+            "  └─┬──────────────────────────────────┬─┘  ",
+            "    │                                  │    ",
+            "    │   ╔═════╗    ┌────┐      ║       │    ",
+            "    │   ║     ║    ││  ││      ║       │    ",
+            "    │   ║     ║    └┬──┬┘      ║       │    ",
+            "    │   ╚═╗ ╔═╝  ┌┬─┴──┴─┬┐   ═╬═      │    ",
+            "    │     ╚═╝    ││      ││    ║       │    ",
+            "  ┌─┴────────────┴┴──────┴┴────────────┴─┐  ",
+            "  │                                      │  ",
+            "  │                                      │  ",
+            "  │                                      │  "
         };
 
 
