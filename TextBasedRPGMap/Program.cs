@@ -371,19 +371,10 @@ namespace TextBasedRPGMap
             Console.ReadKey(true);                                          //
 
             Console.Clear();
-            Console.WriteLine("Now to walk around the map.");
-
-            try                                                                                                 //
-            {                                                                                                   //
-                Console.Write("What scale fo you want your map to be while exploring?: ");                      //
-                DisplayMap(Convert.ToInt32(Console.ReadLine()));                                                //
-            }                                                                                                   //
-            catch (Exception)                                                                                   //Get Input
-            {                                                                                                   //
-                Console.WriteLine("Whoops! something went wrong with that. We'll just use the default scale");  //
-                Console.ReadKey(true);                                                                          //
-                DisplayMap();                                                                                   //
-            }                                                                                                   //
+            Console.WriteLine("Now to explore!");
+            Console.ReadKey(true);
+            DisplayMap();
+                                                                                      //
 
             while((map.GetLength(1) * globalScale) + 2 >= Console.WindowWidth)                                                                  //
             {                                                                                                                                   //
@@ -1253,7 +1244,7 @@ namespace TextBasedRPGMap
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Green;
             }
 
             Console.SetCursorPosition(0, spaceAbove);
