@@ -1301,9 +1301,23 @@ namespace TextBasedRPGMap
             Console.ResetColor();
 
             Console.SetCursorPosition(5, 17);
-            Console.WriteLine(shopMenu[0] + " | Costs " + ArmorStats[currentArmorRank+1] * 10 + " Coins");
+            if (currentArmorRank + 1 < ArmorStats.Length)
+            {
+                Console.WriteLine(shopMenu[0] + " | Costs " + ArmorStats[currentArmorRank + 1] * 10 + " Coins");
+            }
+            else
+            {
+                Console.WriteLine("You have the best armor");
+            }
             Console.SetCursorPosition(5, 19);
-            Console.WriteLine(shopMenu[1] + " | Costs " + WeaponStats[currentWeaponRank+1] * 10 + " Coins");
+            if (currentWeaponRank + 1 < WeaponStats.Length)
+            {
+                Console.WriteLine(shopMenu[1] + " | Costs " + WeaponStats[currentWeaponRank + 1] * 10 + " Coins");
+            }
+            else
+            {
+                Console.WriteLine("You have the best weapon");
+            }
             Console.SetCursorPosition(5, 21);
             Console.WriteLine(shopMenu[2]);
 
