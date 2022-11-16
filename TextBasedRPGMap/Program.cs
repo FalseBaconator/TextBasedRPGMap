@@ -251,7 +251,7 @@ namespace TextBasedRPGMap
 
         static string[] playerSprite = new string[15]
         {
-            "                    ||                      ",
+            "                                            ",
             "                                            ",
             "             ┌──────────┐                   ",
             "            ┌┘          └┐                  ",
