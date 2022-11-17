@@ -226,7 +226,7 @@ namespace TextBasedRPGMap
         };
         static int[] WeaponStats = new int[]
         {
-            2, 4, 6 //wood, iron, enchanted
+            2, 4, 6 //wood, iron, mithril
         };
         static int currentWeaponType = 0;
         static int currentWeaponRank = 0;
@@ -309,11 +309,29 @@ namespace TextBasedRPGMap
             "                                            "
         };
 
+        static string[] flailSprite = new string[15]
+        {
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                     ┌─┐    ",
+            "                                    ┌┘┌┤    ",
+            "                                   ┌┘┌┘║    ",
+            "                                  ┌┘┌┘ │    ",
+            "                                 ┌┘┌┘  ║    ",
+            "                                ┌┘┌┘   │    ",
+            "                               ┌┘┌┘    ║    ",
+            "                               └─┘   ┼─┴─┼  ",
+            "                                     ┤ ┼ ├  ",
+            "                                     ┼─┬─┼  ",
+            "                                            "
+        };
 
 
         static string[][] weapons = new string[][]
         {
-            swordSprite
+            swordSprite, flailSprite
         };
 
         static string[] shopSprite = new string[15]
