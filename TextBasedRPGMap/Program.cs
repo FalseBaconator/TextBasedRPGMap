@@ -523,10 +523,10 @@ namespace TextBasedRPGMap
                         }                                                                                                                                   //
                         Console.ResetColor();
                         var rand = new Random();
-                        //if (rand.Next(0, 7) == 1)
-                        //{
-                        //    StartBattle(rand.Next(0, 7));
-                        //}                                                                                                                                   //
+                        if (rand.Next(0, 7) == 1)
+                        {
+                            StartBattle(rand.Next(0, 7));
+                        }                                                                                                                                   //
                     }
                 }
                 else if (battling == true)
