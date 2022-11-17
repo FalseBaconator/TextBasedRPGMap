@@ -20,7 +20,7 @@ namespace TextBasedRPGMap
         static bool battling = false;
 
         static bool inShop = false;
-        static bool sure = false;
+        static bool selectingWeapon = false;
         
         static string enemy;   //the current enemy being fought
         static int menuCursor;
@@ -38,7 +38,16 @@ namespace TextBasedRPGMap
         {
             "Armor",
             "Weapons",
+            "Swap Weapon",
             "Exit",
+        };
+
+        static string[] weaponMenu = new string[]
+        {
+            "Sword",
+            "Flail",
+            "Spear",
+            "Axe"
         };
 
 
@@ -540,17 +549,17 @@ namespace TextBasedRPGMap
                         }
                     }
                 }
-                else if (inShop == true)
+                else if (inShop == true && selectingWeapon == false)
                 {
                     if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && menuCursor > 0)
                     {
                         menuCursor--;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                     else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && menuCursor < shopMenu.Length - 1)
                     {
                         menuCursor++;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                     else if (input.Key == ConsoleKey.Enter || input.Key == ConsoleKey.Spacebar)
                     {
@@ -563,11 +572,35 @@ namespace TextBasedRPGMap
                                 UpgradeGear(1);
                                 break;
                             case 2:
+                                selectingWeapon = true;
+                                menuCursor = 0;
+                                DrawShop(weaponMenu);
+                                break;
+                            case 3:
                                 DisplayMap();
                                 storeOutY++;
                                 MoveToOut(storeOutX, storeOutY - 1);
                                 break;
                         }
+                    }
+                }else if (inShop == true && selectingWeapon == true)
+                {
+                    if ((input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.W) && menuCursor > 0)
+                    {
+                        menuCursor--;
+                        DrawShop(weaponMenu);
+                    }
+                    else if ((input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.S) && menuCursor < shopMenu.Length - 1)
+                    {
+                        menuCursor++;
+                        DrawShop(weaponMenu);
+                    }
+                    else if (input.Key == ConsoleKey.Enter || input.Key == ConsoleKey.Spacebar)
+                    {
+                        selectingWeapon = false;
+                        currentWeaponType = menuCursor;
+                        menuCursor = 0;
+                        DrawShop(shopMenu);
                     }
                 }
             }                                                                                                                                       //
@@ -857,7 +890,7 @@ namespace TextBasedRPGMap
                         break;
                     case '$':
                         menuCursor = 0;
-                        DrawShop();
+                        DrawShop(shopMenu);
                         return;
                 }                                                           //
 
@@ -1321,7 +1354,7 @@ namespace TextBasedRPGMap
 
         }
 
-        static void DrawShop()
+        static void DrawShop(string[] menu)
         {
             Console.ResetColor();
 
@@ -1336,7 +1369,7 @@ namespace TextBasedRPGMap
                     if (shopWoodChars.Contains(shopSprite[i][j]))
                     {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    }else if (shopMetalChars.Contains(shopSprite[i][j]))
+                    } else if (shopMetalChars.Contains(shopSprite[i][j]))
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                     }
@@ -1347,29 +1380,48 @@ namespace TextBasedRPGMap
 
             Console.ResetColor();
 
-            Console.SetCursorPosition(5, 17);
-            if (currentArmorRank + 1 < ArmorStats.Length)
+
+            if (menu == shopMenu)
             {
-                Console.WriteLine(shopMenu[0] + " | Costs " + ArmorStats[currentArmorRank + 1] * 10 + " Coins");
+                Console.SetCursorPosition(5, 17);
+                if (currentArmorRank + 1 < ArmorStats.Length)
+                {
+                    Console.WriteLine(menu[0] + " | Costs " + ArmorStats[currentArmorRank + 1] * 10 + " Coins");
+                }
+                else
+                {
+                    Console.WriteLine("You have the best armor");
+                }
+                Console.SetCursorPosition(5, 19);
+                if (currentWeaponRank + 1 < WeaponStats.Length)
+                {
+                    Console.WriteLine(menu[1] + " | Costs " + WeaponStats[currentWeaponRank + 1] * 10 + " Coins");
+                }
+                else
+                {
+                    Console.WriteLine("You have the best weapon");
+                }
             }
             else
             {
-                Console.WriteLine("You have the best armor");
-            }
-            Console.SetCursorPosition(5, 19);
-            if (currentWeaponRank + 1 < WeaponStats.Length)
-            {
-                Console.WriteLine(shopMenu[1] + " | Costs " + WeaponStats[currentWeaponRank + 1] * 10 + " Coins");
-            }
-            else
-            {
-                Console.WriteLine("You have the best weapon");
+                Console.SetCursorPosition(5, 17);
+                Console.WriteLine(menu[0]);
+
+                Console.SetCursorPosition(5, 19);
+                Console.WriteLine(menu[1]);
             }
             Console.SetCursorPosition(5, 21);
-            Console.WriteLine(shopMenu[2]);
+            Console.WriteLine(menu[2]);
 
             Console.SetCursorPosition(5, 23);
-            Console.Write("You have " + PlayerStats["Coins"] + " Coins.");
+            Console.WriteLine(menu[3]);
+
+            if (menu == shopMenu)
+            {
+                Console.SetCursorPosition(5, 25);
+                Console.Write("You have " + PlayerStats["Coins"] + " Coins.");
+            }
+
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(3, 17 + (menuCursor * 2));
@@ -1378,13 +1430,12 @@ namespace TextBasedRPGMap
             Console.Write("<");
 
 
-            DrawPlayer(25);
+            DrawPlayer(27);
             
         }
 
         static void UpgradeGear(int gearType) //0 = armor, 1 = weapon
         {
-            sure = false;
             Console.ResetColor();
 
             if (gearType == 0 && currentArmorRank+1 < ArmorStats.Length)
@@ -1401,12 +1452,12 @@ namespace TextBasedRPGMap
                         PlayerStats["HP"] = ArmorStats[currentArmorRank];
                         PlayerStats["Coins"] -= Cost;
                         menuCursor = 0;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                     else
                     {
                         menuCursor = 0;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                 }
                 else
@@ -1423,7 +1474,7 @@ namespace TextBasedRPGMap
                     Console.SetCursorPosition(5, 19);
                     Console.Write("You can't afford it.");
                     Console.ReadKey(true);
-                    DrawShop();
+                    DrawShop(shopMenu);
 
                 }
             }
@@ -1439,12 +1490,12 @@ namespace TextBasedRPGMap
                         PlayerStats["ATK"] = WeaponStats[currentWeaponRank];
                         PlayerStats["Coins"] -= Cost;
                         menuCursor = 0;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                     else
                     {
                         menuCursor = 0;
-                        DrawShop();
+                        DrawShop(shopMenu);
                     }
                 }
                 else
@@ -1461,7 +1512,7 @@ namespace TextBasedRPGMap
                     Console.SetCursorPosition(5, 19);
                     Console.Write("You can't afford it.");
                     Console.ReadKey(true);
-                    DrawShop();
+                    DrawShop(shopMenu);
 
                 }
             }
@@ -1474,7 +1525,7 @@ namespace TextBasedRPGMap
                         
             while (Unsure)
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 35; j++)
                     {
@@ -1485,15 +1536,17 @@ namespace TextBasedRPGMap
 
                 Console.ResetColor();
 
-                Console.SetCursorPosition(5, 18);
+                Console.SetCursorPosition(5, 17);
+
+                Console.SetCursorPosition(5, 19);
                 Console.Write("Yes");
-                Console.SetCursorPosition(5, 20);
+                Console.SetCursorPosition(5, 21);
                 Console.Write("No");
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(3, 18 + (menuCursor * 2));
+                Console.SetCursorPosition(3, 17 + (menuCursor * 2));
                 Console.Write(">");
-                Console.SetCursorPosition(9, 18 + (menuCursor * 2));
+                Console.SetCursorPosition(9, 17 + (menuCursor * 2));
                 Console.Write("<");
 
                 input = Console.ReadKey(true);
