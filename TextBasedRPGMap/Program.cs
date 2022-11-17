@@ -228,7 +228,7 @@ namespace TextBasedRPGMap
         {
             2, 4, 6 //wood, iron, mithril
         };
-        static int currentWeaponType = 3;
+        static int currentWeaponType = 0;
         static int currentWeaponRank = 0;
         static int currentArmorRank = 0;
 
@@ -303,8 +303,8 @@ namespace TextBasedRPGMap
             "                                 ┌┘ ┌┘      ",
             "                             ┌─┐┌┘ ┌┘       ",
             "                             └┐└┤ ┌┘        ",
-            "                              └┐└┬┘         ",
-            "                               └┐└┐         ",
+            "                              ├┐└┬┘         ",
+            "                               ┴┐└┐         ",
             "                                └─┘         ",
             "                                            "
         };
@@ -322,8 +322,8 @@ namespace TextBasedRPGMap
             "                                 ┌┘┌┘  ║    ",
             "                                ┌┘┌┘   │    ",
             "                               ┌┘┌┘    ║    ",
-            "                               └─┘   ┼─┴─┼  ",
-            "                                     ┤ ┼ ├  ",
+            "                              ┌┘┌┘   ┼─┴─┼  ",
+            "                               ─┘    ┤ ┼ ├  ",
             "                                     ┼─┬─┼  ",
             "                                            "
         };
@@ -341,8 +341,8 @@ namespace TextBasedRPGMap
             "                                 ┌┘┌┘       ",
             "                                ┌┘┌┘        ",
             "                               ┌┘┌┘         ",
-            "                               └─┘          ",
-            "                                            ",
+            "                              ┌┘┌┘          ",
+            "                               ─┘           ",
             "                                            ",
             "                                            "
         };
@@ -360,7 +360,7 @@ namespace TextBasedRPGMap
             "                                 ┌┘┌┘  └─┘  ",
             "                                ┌┘┌┘        ",
             "                               ┌┘┌┘         ",
-            "                              ┌└─┘          ",
+            "                              ┌┘┌┘          ",
             "                               ─┘           ",
             "                                            ",
             "                                            "
