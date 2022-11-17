@@ -228,7 +228,7 @@ namespace TextBasedRPGMap
         {
             2, 4, 6 //wood, iron, mithril
         };
-        static int currentWeaponType = 2;
+        static int currentWeaponType = 3;
         static int currentWeaponRank = 0;
         static int currentArmorRank = 0;
 
@@ -349,19 +349,19 @@ namespace TextBasedRPGMap
 
         static string[] axeSprite = new string[15]
         {
-            "                                         ┌─┐",
-            "                                        ┌┴┬┘",
-            "                                       ┌┘┌┘ ",
-            "                                      ┌┘┌┘  ",
-            "                                     ┌┘┌┘   ",
-            "                                    ┌┘┌┘    ",
-            "                                   ┌┘┌┘     ",
-            "                                  ┌┘┌┘      ",
-            "                                 ┌┘┌┘       ",
+            "                                            ",
+            "                                            ",
+            "                                            ",
+            "                                      ┌─┐   ",
+            "                                     ┌┘┌┤   ",
+            "                                    ┌┘┌┘└──┐",
+            "                                   ┌┘┌┴┐  ┌┘",
+            "                                  ┌┘┌┘ │ ┌┘ ",
+            "                                 ┌┘┌┘  └─┘  ",
             "                                ┌┘┌┘        ",
             "                               ┌┘┌┘         ",
-            "                               └─┘          ",
-            "                                            ",
+            "                              ┌└─┘          ",
+            "                               ─┘           ",
             "                                            ",
             "                                            "
         };
@@ -369,7 +369,7 @@ namespace TextBasedRPGMap
 
         static string[][] weapons = new string[][]
         {
-            swordSprite, flailSprite, spearSprite
+            swordSprite, flailSprite, spearSprite, axeSprite
         };
 
         static string[] shopSprite = new string[15]
