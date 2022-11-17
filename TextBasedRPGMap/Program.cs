@@ -1537,6 +1537,7 @@ namespace TextBasedRPGMap
                 Console.ResetColor();
 
                 Console.SetCursorPosition(5, 17);
+                Console.WriteLine("Are You Sure?");
 
                 Console.SetCursorPosition(5, 19);
                 Console.Write("Yes");
@@ -1544,9 +1545,9 @@ namespace TextBasedRPGMap
                 Console.Write("No");
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(3, 17 + (menuCursor * 2));
+                Console.SetCursorPosition(3, 19 + (menuCursor * 2));
                 Console.Write(">");
-                Console.SetCursorPosition(9, 17 + (menuCursor * 2));
+                Console.SetCursorPosition(9, 19 + (menuCursor * 2));
                 Console.Write("<");
 
                 input = Console.ReadKey(true);
