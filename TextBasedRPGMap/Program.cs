@@ -301,11 +301,11 @@ namespace TextBasedRPGMap
             "                                   ┌┘ ┌┘    ",
             "                                  ┌┘ ┌┘     ",
             "                                 ┌┘ ┌┘      ",
-            "                                ┌┘ ┌┘       ",
-            "                              ┌─┘ ┌┘        ",
-            "                              └┐ ┌┘         ",
-            "                               └─┘          ",
-            "                                            ",
+            "                             ┌─┐┌┘ ┌┘       ",
+            "                             └┐└┤ ┌┘        ",
+            "                              └┐└┬┘         ",
+            "                               └┐└┐         ",
+            "                                └─┘         ",
             "                                            "
         };
 
@@ -1221,7 +1221,7 @@ namespace TextBasedRPGMap
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
             }else if(currentArmorRank == 1)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
             else
             {
@@ -1240,7 +1240,7 @@ namespace TextBasedRPGMap
             }
             else if (currentWeaponRank == 1)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
             else
             {
