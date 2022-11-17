@@ -50,6 +50,12 @@ namespace TextBasedRPGMap
             "Axe"
         };
 
+        static string[] ranks = new string[]
+        {
+            "Wood",
+            "Iron",
+            "Mithril"
+        };
 
         static char[,] map = new char[,]
         {
@@ -1401,20 +1407,26 @@ namespace TextBasedRPGMap
                 {
                     Console.WriteLine("You have the best weapon");
                 }
+                Console.SetCursorPosition(5, 21);
+                Console.WriteLine(menu[2]);
+
+                Console.SetCursorPosition(5, 23);
+                Console.WriteLine(menu[3]);
             }
-            else
+            else if (menu == weaponMenu)
             {
                 Console.SetCursorPosition(5, 17);
-                Console.WriteLine(menu[0]);
+                Console.WriteLine(ranks[currentWeaponRank] + " " + menu[0]);
 
                 Console.SetCursorPosition(5, 19);
-                Console.WriteLine(menu[1]);
-            }
-            Console.SetCursorPosition(5, 21);
-            Console.WriteLine(menu[2]);
+                Console.WriteLine(ranks[currentWeaponRank] + " " + menu[1]);
 
-            Console.SetCursorPosition(5, 23);
-            Console.WriteLine(menu[3]);
+                Console.SetCursorPosition(5, 21);
+                Console.WriteLine(ranks[currentWeaponRank] + " " + menu[2]);
+
+                Console.SetCursorPosition(5, 23);
+                Console.WriteLine(ranks[currentWeaponRank] + " " + menu[3]);
+            }
 
             if (menu == shopMenu)
             {
@@ -1445,7 +1457,7 @@ namespace TextBasedRPGMap
                 if(PlayerStats["Coins"] >= Cost)
                 {
                     
-                    if(AreYouSure() == true)
+                    if(AreYouSure(gearType) == true)
                     {
                         currentArmorRank++;
                         PlayerStats["Max HP"] = ArmorStats[currentArmorRank];
@@ -1484,7 +1496,7 @@ namespace TextBasedRPGMap
 
                 if (PlayerStats["Coins"] >= Cost)
                 {
-                    if (AreYouSure() == true)
+                    if (AreYouSure(gearType) == true)
                     {
                         currentWeaponRank++;
                         PlayerStats["ATK"] = WeaponStats[currentWeaponRank];
@@ -1518,7 +1530,7 @@ namespace TextBasedRPGMap
             }
         }
 
-        static bool AreYouSure()
+        static bool AreYouSure(int gearType)
         {
             bool Unsure = true;
             menuCursor = 0;
@@ -1537,7 +1549,14 @@ namespace TextBasedRPGMap
                 Console.ResetColor();
 
                 Console.SetCursorPosition(5, 17);
-                Console.WriteLine("Are You Sure?");
+                Console.Write("Are You Sure You Want To Buy ");
+                if(gearType == 0)
+                {
+                    Console.Write("Some " + ranks[currentArmorRank + 1] + " Armor?");
+                }else if(gearType == 1)
+                {
+                    Console.Write("A " + ranks[currentWeaponRank + 1] + " " + weaponMenu[currentWeaponType] + "?");
+                }
 
                 Console.SetCursorPosition(5, 19);
                 Console.Write("Yes");
