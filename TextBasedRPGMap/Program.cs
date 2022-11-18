@@ -495,7 +495,7 @@ namespace TextBasedRPGMap
                         }                                                                                                                                           //      //
                         Console.ResetColor();                                                                                                                       //  //
                         var rand = new Random();                                                                                                                    //  //
-                        if (rand.Next(0, 7) == 1)                                                                                                                   //  //
+                        if (rand.Next(0, 8) == 1)                                                                                                                   //  //
                         {                                                                                                                                           //  //  Chance to start a battle
                             StartBattle(rand.Next(0, 7));                                                                                                           //  //
                         }                                                                                                                                           //  //
