@@ -422,6 +422,7 @@ namespace TextBasedRPGMap
 
             Console.CursorVisible = false;
 
+            Console.WriteLine("This Game Is Best Experienced In Full Screen, Especially For Battle And Shop Scenes");
 
             Console.WriteLine("Displaying map with no scale input");        //
             Console.ReadKey(true);                                          //
